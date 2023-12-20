@@ -8,9 +8,12 @@ const config: Config = {
     ],
     theme: {
         extend: {
-            green: {
-                dark: '#00252f',
-                fluor: '#71ff54',
+            colors: {
+                green: {
+                    dark: '#00252f',
+                    fluor: '#71ff54',
+                },
+                orange: '#d4a05b',
             },
         },
     },
