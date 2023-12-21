@@ -10,7 +10,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang='es'>
-            <body className={openSans.className + ' overflow-hidden'}>{children}</body>
+            <body className={openSans.className + ' overflow-hidden'}>
+                <div className='min-h-screen bg-[url("/bg.jpg")] bg-cover bg-bottom'>
+                    <div className='min-h-screen bg-[rgba(0,37,47,0.9)]'>{children}</div>
+                </div>
+            </body>
         </html>
     );
 }
