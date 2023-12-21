@@ -17,7 +17,7 @@ export default function Home() {
                     </span>
                     <span className='text-white tracking-wider font-semibold'>LLEGUE JUSTITO</span>
                 </Link>
-                <nav>
+                <nav className='hidden lg:block'>
                     <ul className='flex gap-5 text-white tracking-wider uppercase'>
                         <li>
                             <Link href='/'>Calendarios</Link>
@@ -29,7 +29,7 @@ export default function Home() {
                 </nav>
             </header>
 
-            <main className='mx-auto w-fit my-32'>
+            <main className='mx-auto w-fit mt-12'>
                 <Calculator />
             </main>
             <BottomTriangle />

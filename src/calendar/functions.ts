@@ -2,8 +2,14 @@ import calendar from './calendar';
 
 export function calculateDateWithoutHolidays(dateSelected: string, countString: string) {
     let count = parseInt(countString);
-    let found = false;
 
+    const validity = CheckValidity(dateSelected, count);
+
+    if (!validity.isValid) {
+        return validity.response;
+    }
+
+    let found = false;
     for (let k = 0; k < calendar.years.length; k++) {
         const currentYear = calendar.years[k];
 
@@ -39,5 +45,23 @@ export function calculateDateWithoutHolidays(dateSelected: string, countString: 
     }
 
     //Si no se ha encontrado una fecha, es porque son valores que no deberian utilizarse
-    return 'Valores invalidos';
+    return 'La fecha se excede de los calendarios disponibles';
+}
+
+function CheckValidity(dateSelected: string, count: number) {
+    let isValid = true;
+    let response = '';
+
+    if (dateSelected == '') {
+        isValid = false;
+        response = 'Ingrese fecha de notificacion de la demanda.';
+    } else if (count <= 0) {
+        isValid = false;
+        response = 'El plazo debe ser igual o mayor a 1 dia.';
+    } else if (Number.isNaN(count)) {
+        isValid = false;
+        response = 'El plazo ingresado no es valido.';
+    }
+
+    return { isValid: isValid, response: response };
 }
