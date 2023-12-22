@@ -1,12 +1,26 @@
 import calendar from './calendar';
 
-export function calculateDateWithoutHolidays(dateSelected: string, countString: string) {
+type filters = {
+    holidays: boolean;
+    allowTurismo: boolean;
+    weekend: boolean;
+    judicialVacation: boolean;
+};
+
+type day = {
+    date: string;
+    name: string;
+    holiday: { date: string; description: string } | boolean;
+    isJudicialVacation: boolean;
+};
+
+export function calculateDate(dateSelected: string, countString: string, filters: filters) {
     let count = parseInt(countString);
 
-    const validity = CheckValidity(dateSelected, count);
+    const validInputs = CheckValidity(dateSelected, count);
 
-    if (!validity.isValid) {
-        return validity.response;
+    if (!validInputs.isValid) {
+        return validInputs.response;
     }
 
     let found = false;
@@ -20,13 +34,9 @@ export function calculateDateWithoutHolidays(dateSelected: string, countString: 
                 const currentDay = currentMonth.days[j];
 
                 //Filters that omits days
-                if (
-                    found &&
-                    !currentDay.holiday &&
-                    !['Sabado', 'Domingo'].includes(currentDay.name) &&
-                    !currentDay.isJudicialVacation
-                ) {
+                if (found && applyFilters(currentDay, filters)) {
                     count--;
+                    //console.log(currentDay)
                 }
 
                 //When the term is over, returns the date
@@ -44,7 +54,7 @@ export function calculateDateWithoutHolidays(dateSelected: string, countString: 
         }
     }
 
-    //Si no se ha encontrado una fecha, es porque son valores que no deberian utilizarse
+    //Si no se ha encontrado una fecha, es porque son valores que exceden los calendarios
     return 'La fecha se excede de los calendarios disponibles';
 }
 
@@ -64,4 +74,29 @@ function CheckValidity(dateSelected: string, count: number) {
     }
 
     return { isValid: isValid, response: response };
+}
+
+function applyFilters(currentDay: day, filters: filters) {
+    let response = true;
+
+    //Holidays
+    if (filters.holidays && currentDay.holiday) {
+        if (filters.allowTurismo && currentDay.holiday.description != 'Turismo') {
+            response = false;
+        } else if (!filters.allowTurismo) {
+            response = false;
+        }
+    }
+
+    //Weekends
+    if (filters.weekend && ['Sabado', 'Domingo'].includes(currentDay.name)) {
+        response = false;
+    }
+
+    //Judicial vacations
+    if (filters.judicialVacation && currentDay.isJudicialVacation) {
+        response = false;
+    }
+
+    return response;
 }

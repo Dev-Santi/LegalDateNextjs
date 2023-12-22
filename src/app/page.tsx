@@ -7,7 +7,7 @@ import Calculator from '@/components/calculator';
 
 export default function Home() {
     return (
-        <div className='max-w-[64rem] mx-auto p-6 pt-12'>
+        <div className='max-w-[64rem] mx-auto px-6 py-4 md:pt-12'>
             <TopTriangle />
 
             <header className='flex justify-between'>
@@ -29,7 +29,7 @@ export default function Home() {
                 </nav>
             </header>
 
-            <main className='mx-auto w-fit mt-12'>
+            <main className='mx-auto my-2 w-fit flex items-center justify-center min-h-[calc(100vh-5rem)] md:min-h-[calc(100vh-10rem)]'>
                 <Calculator />
             </main>
             <BottomTriangle />
