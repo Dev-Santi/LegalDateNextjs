@@ -1,9 +1,10 @@
-import { GoLaw } from 'react-icons/go';
+import Link from 'next/link';
+
 import BottomTriangle from '@/components/triangles/BottomTriangle';
 import TopTriangle from '@/components/triangles/TopTriangle';
-import Link from 'next/link';
-import { calculateDateWithoutHolidays } from '@/calendar/functions';
 import Calculator from '@/components/calculator';
+
+import { GoLaw } from 'react-icons/go';
 
 export default function Home() {
     return (

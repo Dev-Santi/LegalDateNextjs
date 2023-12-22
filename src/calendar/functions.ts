@@ -10,7 +10,7 @@ type filters = {
 type day = {
     date: string;
     name: string;
-    holiday: { date: string; description: string } | boolean;
+    holiday: any;
     isJudicialVacation: boolean;
 };
 
