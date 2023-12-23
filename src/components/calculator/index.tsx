@@ -39,10 +39,15 @@ export default function Calculator() {
                         visibleFiltersClass
                     }
                 >
-                    <h2 className='uppercase font-semibold '>Filtros</h2>
-                    <div className='cursor-pointer' onClick={() => setVisibleFilters(!visibleFilters)}>
-                        {visibleFilters ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                    </div>
+                    <h2
+                        onClick={() => setVisibleFilters(!visibleFilters)}
+                        className='uppercase w-full flex flex-col items-center font-semibold '
+                    >
+                        Filtros
+                        <span className='cursor-pointer'>
+                            {visibleFilters ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                        </span>
+                    </h2>
 
                     {/* Filters */}
                     <div className='flex justify-between items-center w-full mt-4'>

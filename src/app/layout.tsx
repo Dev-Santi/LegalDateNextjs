@@ -3,8 +3,9 @@ import { openSans } from '@/fonts';
 import './globals.css';
 
 export const metadata: Metadata = {
-    title: '',
-    description: '',
+    title: 'Calculadora de plazos',
+    description:
+        'Calcula fechas termino en Uruguay de manera fácil y precisa. Introduce una fecha y el plazo requerido, selecciona los tipos de fechas que deben saltearse y se te proporcionará la fecha de vencimiento. Optimiza tu gestión de plazos legales de manera eficiente y evita posibles incumplimientos.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
