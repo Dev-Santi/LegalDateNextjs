@@ -32,7 +32,7 @@ export default function Calculator() {
 
     return (
         <>
-            <form className='text-center flex flex-col gap-4 items-center'>
+            <form className='text-center flex flex-col gap-4 items-center py-6'>
                 <div
                     className={
                         'transition-all duration-300 bg-gray-700 text-white w-full p-3 flex flex-col items-center overflow-hidden ' +

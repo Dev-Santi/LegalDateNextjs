@@ -21,7 +21,6 @@ export default function Home() {
                     </ul>
                 </nav>
             </header>
-
             <main className='mx-auto my-2 w-fit mt-24'>
                 <Calculator />
             </main>
