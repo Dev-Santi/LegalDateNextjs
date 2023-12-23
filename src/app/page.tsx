@@ -8,7 +8,7 @@ import { GoLaw } from 'react-icons/go';
 
 export default function Home() {
     return (
-        <div className='max-w-[64rem] mx-auto px-6 py-4 md:pt-12'>
+        <div className='max-w-[64rem] mx-auto px-6 pt-8'>
             <TopTriangle />
 
             <header className='flex justify-between'>
@@ -16,13 +16,10 @@ export default function Home() {
                     <span className='text-orange text-3xl'>
                         <GoLaw />
                     </span>
-                    <span className='text-white tracking-wider font-semibold'>LLEGUE JUSTITO</span>
+                    <span className='text-white tracking-wider font-semibold'>JUSTO A TIEMPO</span>
                 </Link>
-                <nav className='hidden lg:block'>
+                <nav className='hidden md:block'>
                     <ul className='flex gap-5 text-white tracking-wider uppercase'>
-                        <li>
-                            <Link href='/'>Calendarios</Link>
-                        </li>
                         <li>
                             <Link href='/'>Sobre la app</Link>
                         </li>
@@ -30,9 +27,10 @@ export default function Home() {
                 </nav>
             </header>
 
-            <main className='mx-auto my-2 w-fit flex items-center justify-center min-h-[calc(100vh-5rem)] md:min-h-[calc(100vh-10rem)]'>
+            <main className='mx-auto my-2 w-fit mt-24'>
                 <Calculator />
             </main>
+
             <BottomTriangle />
         </div>
     );
