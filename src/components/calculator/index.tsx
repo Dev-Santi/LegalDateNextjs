@@ -13,7 +13,7 @@ export default function Calculator() {
         holidays: true, // Filtrar dias feriados
         weekend: true, // Filtrar Sabados y Domingos
         judicialVacation: true, // Filtrar ferias judiciales
-        allowTurismo: false, // Tomar semana de turismo como semana habil
+        turismo: false, // Filtrar la semana de turismo incluso cuando se filtren los dias corridos
     });
     const [visibleFilters, setVisibleFilters] = useState(false);
 
@@ -28,7 +28,7 @@ export default function Calculator() {
         });
     }
 
-    const visibleFiltersClass = visibleFilters ? 'h-54' : 'h-14';
+    const visibleFiltersClass = visibleFilters ? 'h-72' : 'h-14';
 
     return (
         <>
@@ -41,13 +41,16 @@ export default function Calculator() {
                 >
                     <h2
                         onClick={() => setVisibleFilters(!visibleFilters)}
-                        className='uppercase w-full flex flex-col items-center font-semibold '
+                        className='cursor-pointer uppercase w-full flex flex-col items-center font-semibold '
                     >
                         Filtros
-                        <span className='cursor-pointer'>
-                            {visibleFilters ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                        </span>
+                        <span>{visibleFilters ? <IoIosArrowUp /> : <IoIosArrowDown />}</span>
                     </h2>
+
+                    <h3 className='my-2 text-red-400'>
+                        Las opciones marcadas indican los dias <br /> que
+                        <span className='font-bold'> NO </span>se deben tomar en cuenta
+                    </h3>
 
                     {/* Filters */}
                     <div className='flex justify-between items-center w-full mt-4'>
@@ -64,14 +67,14 @@ export default function Calculator() {
                     </div>
 
                     <div className='flex justify-between items-center w-full mt-4'>
-                        <label className='' htmlFor='turismoCheck'>
+                        <label className={filters.holidays ? 'text-gray-500' : ''} htmlFor='turismoCheck'>
                             Semana de turismo
                         </label>
                         <input
+                            disabled={filters.holidays}
                             type='checkbox'
-                            onChange={() => setFilters({ ...filters, allowTurismo: !filters.allowTurismo })}
+                            onChange={() => setFilters({ ...filters, turismo: !filters.turismo })}
                             name='turismo'
-                            defaultChecked
                             id='turismoCheck'
                         />
                     </div>

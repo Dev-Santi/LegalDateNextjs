@@ -2,7 +2,7 @@ import calendar from './calendar';
 
 type filters = {
     holidays: boolean;
-    allowTurismo: boolean;
+    turismo: boolean;
     weekend: boolean;
     judicialVacation: boolean;
 };
@@ -36,7 +36,7 @@ export function calculateDate(dateSelected: string, countString: string, filters
                 //Filters that omits days
                 if (found && applyFilters(currentDay, filters)) {
                     count--;
-                    //console.log(currentDay)
+                    console.log(currentDay);
                 }
 
                 //When the term is over, returns the date
@@ -81,11 +81,12 @@ function applyFilters(currentDay: day, filters: filters) {
 
     //Holidays
     if (filters.holidays && currentDay.holiday) {
-        if (filters.allowTurismo && currentDay.holiday.description != 'Turismo') {
-            response = false;
-        } else if (!filters.allowTurismo) {
-            response = false;
-        }
+        response = false;
+    }
+
+    //Turismo
+    if (filters.turismo && currentDay.holiday.description == 'Turismo') {
+        response = false;
     }
 
     //Weekends

@@ -21,7 +21,8 @@ export default function Home() {
                     </ul>
                 </nav>
             </header>
-            <main className='mx-auto my-2 w-fit mt-24'>
+
+            <main className='mx-auto py-12 w-fit flex flex-col items-center justify-center min-h-[calc(100vh-5rem)]'>
                 <Calculator />
             </main>
         </div>
