@@ -31,14 +31,14 @@ export default function Calculator() {
         });
     }
 
-    const visibleFiltersClass = visibleFilters ? 'h-84 md:h-72' : 'h-14';
+    const visibleFiltersClass = visibleFilters ? 'h-[20rem] md:h-72' : 'h-14';
 
     return (
         <>
             <form className='text-center flex flex-col gap-4 items-center py-6'>
                 <div
                     className={
-                        'transition-all duration-300 bg-gray-700 text-white w-full p-3 flex flex-col items-center overflow-hidden ' +
+                        'transition-all duration-300 bg-gray-700 text-white w-full p-3 flex flex-col justify-between items-center overflow-hidden ' +
                         visibleFiltersClass
                     }
                 >
@@ -50,8 +50,8 @@ export default function Calculator() {
                         <span>{visibleFilters ? <IoIosArrowUp /> : <IoIosArrowDown />}</span>
                     </h2>
 
-                    <h3 className='my-2 text-red-400'>
-                        Las opciones marcadas indican los dias <br /> que
+                    <h3 className='my-2 text-red-400 max-w-[22rem]'>
+                        Las opciones marcadas indican los dias que
                         <span className='font-bold'> NO </span>se deben tomar en cuenta
                     </h3>
 
@@ -143,7 +143,7 @@ export default function Calculator() {
 
                 <button
                     onClick={handleClick}
-                    className='bg-gray-700 border-2 border-white mt-2 w-fit text-white rounded-xl py-4 px-14'
+                    className='bg-gray-700 border-2 border-white mt-2 w-fit text-white rounded-xl py-4 px-14 hover:bg-transparent'
                     type='submit'
                 >
                     CALCULAR

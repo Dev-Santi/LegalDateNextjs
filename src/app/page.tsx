@@ -1,31 +1,19 @@
 import Link from 'next/link';
 import Calculator from '@/components/calculator';
 
-import { GoLaw } from 'react-icons/go';
-
 export default function Home() {
     return (
-        <div className='max-w-[64rem] mx-auto px-6 pt-8'>
-            <header className='flex justify-between'>
-                <Link href='/' className='flex items-center gap-2'>
-                    <span className='text-orange text-3xl'>
-                        <GoLaw />
-                    </span>
-                    <span className='text-white tracking-wider font-semibold'>JUSTO A TIEMPO</span>
-                </Link>
-                <nav className='hidden md:block'>
-                    <ul className='flex gap-5 text-white tracking-wider uppercase'>
-                        <li>
-                            <Link href='/'>Sobre la app</Link>
-                        </li>
-                    </ul>
-                </nav>
-            </header>
+        <main className='mx-auto py-12 w-fit flex flex-col items-center justify-center min-h-[calc(100vh-5rem)]'>
+            <p className='text-gray-300 text-center text-sm'>Fecha limite: 31 de Diciembre de 2024.</p>
+            <Calculator />
 
-            <main className='mx-auto py-12 w-fit flex flex-col items-center justify-center min-h-[calc(100vh-5rem)]'>
-                <Calculator />
-                <p className='text-gray-300'>Calendario funcional hasta Diciembre de 2024.</p>
-            </main>
-        </div>
+            <Link
+                className='text-blue-400 text-sm text-center mt-2 hover:text-white'
+                href='https://www.linkedin.com/in/santiago-larrosa-bauz%C3%A1-99b740251/'
+                target='_blank'
+            >
+                ¿Tienes ideas para aportar? ¿Has encontrado algún problema en la aplicacion? ¡Quiero saberlo!
+            </Link>
+        </main>
     );
 }

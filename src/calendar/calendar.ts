@@ -2811,7 +2811,7 @@ export default {
                         {
                             date: '2024-03-30',
                             name: 'Sabado',
-                            holiday: false,
+                            holiday: { date: '2024-03-30', description: 'Turismo' },
                             isJudicialVacation: false,
                         },
                         {

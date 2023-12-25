@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { openSans } from '@/fonts';
 import './globals.css';
+import Navbar from '@/components/navbar';
 
 export const metadata: Metadata = {
     title: 'Calculadora de plazos',
@@ -13,7 +14,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <html className='' lang='es'>
             <body className={openSans.className + ' overflow-x-hidden'}>
                 <div className='min-h-screen bg-[url("/bg.jpg")] bg-cover bg-bottom'>
-                    <div className='min-h-screen bg-[rgba(0,37,47,0.9)]'>{children}</div>
+                    <div className='min-h-screen bg-[rgba(0,37,47,0.9)]'>
+                        <div className='max-w-[64rem] mx-auto px-6 pt-8'>
+                            <Navbar />
+                            {children}
+                        </div>
+                    </div>
                 </div>
             </body>
         </html>

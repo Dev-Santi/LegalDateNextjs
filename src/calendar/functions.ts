@@ -36,7 +36,6 @@ export function calculateDate(dateSelected: string, countString: string, filters
                 //Filters that omits days
                 if (found && applyFilters(currentDay, filters)) {
                     count--;
-                    console.log(currentDay);
                 }
 
                 //When the term is over, returns the date
