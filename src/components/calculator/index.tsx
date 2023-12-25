@@ -19,16 +19,19 @@ export default function Calculator() {
 
     function handleClick(e: React.MouseEvent) {
         e.preventDefault();
+        const response = calculateDate(date, count, {
+            ...filters,
+        });
+
         swal.fire({
-            title: calculateDate(date, count, {
-                ...filters,
-            }),
+            title: response,
+            icon: response.includes('Error') ? 'warning' : undefined,
             confirmButtonColor: '#d4a05b',
             confirmButtonText: 'Cerrar',
         });
     }
 
-    const visibleFiltersClass = visibleFilters ? 'h-72' : 'h-14';
+    const visibleFiltersClass = visibleFilters ? 'h-84 md:h-72' : 'h-14';
 
     return (
         <>

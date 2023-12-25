@@ -24,6 +24,7 @@ export default function Home() {
 
             <main className='mx-auto py-12 w-fit flex flex-col items-center justify-center min-h-[calc(100vh-5rem)]'>
                 <Calculator />
+                <p className='text-gray-300'>Calendario funcional hasta Diciembre de 2024.</p>
             </main>
         </div>
     );

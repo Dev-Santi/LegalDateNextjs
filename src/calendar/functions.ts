@@ -64,13 +64,13 @@ function CheckValidity(dateSelected: string, count: number) {
 
     if (dateSelected == '') {
         isValid = false;
-        response = 'Ingrese fecha de notificacion de la demanda.';
+        response = 'Error, ingrese fecha de notificacion de la demanda.';
     } else if (count <= 0) {
         isValid = false;
-        response = 'El plazo debe ser igual o mayor a 1 dia.';
+        response = 'Error, el plazo debe ser igual o mayor a 1 dia.';
     } else if (Number.isNaN(count)) {
         isValid = false;
-        response = 'El plazo ingresado no es valido.';
+        response = 'Error, el plazo ingresado no es valido.';
     }
 
     return { isValid: isValid, response: response };
