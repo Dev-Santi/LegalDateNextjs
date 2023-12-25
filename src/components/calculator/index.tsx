@@ -51,14 +51,13 @@ export default function Calculator() {
                     </h2>
 
                     <h3 className='my-2 text-red-400 max-w-[22rem]'>
-                        Las opciones marcadas indican los dias que
-                        <span className='font-bold'> NO </span>se deben tomar en cuenta
+                        Indicar los dias en el que el computo debe suspenderse.
                     </h3>
 
                     {/* Filters */}
                     <div className='flex justify-between items-center w-full mt-4'>
                         <label className='' htmlFor='holidayCheck'>
-                            Feriados
+                            Durante feriados
                         </label>
                         <input
                             type='checkbox'
@@ -71,7 +70,7 @@ export default function Calculator() {
 
                     <div className='flex justify-between items-center w-full mt-4'>
                         <label className={filters.holidays ? 'text-gray-500' : ''} htmlFor='turismoCheck'>
-                            Semana de turismo
+                            Durante semana de turismo
                         </label>
                         <input
                             disabled={filters.holidays}
@@ -84,7 +83,7 @@ export default function Calculator() {
 
                     <div className='flex justify-between items-center w-full mt-4'>
                         <label className='' htmlFor='weekendCheck'>
-                            Fines de semana
+                            Durante sabados y domingos
                         </label>
                         <input
                             type='checkbox'
@@ -97,7 +96,7 @@ export default function Calculator() {
 
                     <div className='flex justify-between items-center w-full mt-4'>
                         <label className='' htmlFor='judicialVacationsCheck'>
-                            Ferias judiciales
+                            Durante ferias judiciales
                         </label>
                         <input
                             type='checkbox'
