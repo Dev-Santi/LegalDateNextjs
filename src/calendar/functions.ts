@@ -38,14 +38,19 @@ export function calculateDate(dateSelected: string, countString: string, filters
                     count--;
                 }
 
-                //When the term is over, returns the date
-                if (count == 0) {
+                //When the term is over and finds a day that is not weekend, judicial vacation or holiday, returns that date
+                if (
+                    count <= 0 &&
+                    !currentDay.holiday &&
+                    !['Sabado,Domingo'].includes(currentDay.name) &&
+                    !currentDay.isJudicialVacation
+                ) {
                     return `${currentDay.name} ${currentDay.date.split('-')[2]} de ${
                         currentMonth.monthName
                     } de ${currentYear.yearNumber}`;
                 }
 
-                // Search for the date selected at the end to start the countdown in the next legal day
+                // Search for the date selected at the end to start the countdown in the next day
                 if (!found && dateSelected == currentDay.date) {
                     found = true;
                 }

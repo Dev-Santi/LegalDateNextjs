@@ -8,7 +8,7 @@ export default function Home() {
             <Calculator />
 
             <Link
-                className='text-blue-400 text-sm text-center mt-2 hover:text-white'
+                className='text-blue-400 text-sm text-center mt-6 hover:text-white'
                 href='https://www.linkedin.com/in/santiago-larrosa-bauz%C3%A1-99b740251/'
                 target='_blank'
             >

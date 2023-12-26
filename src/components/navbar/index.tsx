@@ -6,7 +6,6 @@ import { GoLaw } from 'react-icons/go';
 
 export default function Navbar() {
     const path = usePathname();
-    console.log(path == '/');
     return (
         <header className='flex justify-between'>
             <Link href='/' className='flex items-center gap-2 text-white hover:text-orange'>

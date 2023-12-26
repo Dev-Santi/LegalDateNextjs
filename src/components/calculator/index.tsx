@@ -13,9 +13,32 @@ export default function Calculator() {
         holidays: true, // Filtrar dias feriados
         weekend: true, // Filtrar Sabados y Domingos
         judicialVacation: true, // Filtrar ferias judiciales
-        turismo: false, // Filtrar la semana de turismo incluso cuando se filtren los dias corridos
+        turismo: true, // Filtrar la semana de turismo incluso cuando se filtren los dias corridos
     });
     const [visibleFilters, setVisibleFilters] = useState(false);
+    const [preFilter, setPreFilter] = useState(0);
+
+    function setLaboral() {
+        setFilters({
+            holidays: true,
+            weekend: true,
+            judicialVacation: true,
+            turismo: true,
+        });
+        setPreFilter(0);
+        setCount('15');
+    }
+
+    function setCivil() {
+        setFilters({
+            holidays: true,
+            weekend: false,
+            judicialVacation: true,
+            turismo: true,
+        });
+        setPreFilter(1);
+        setCount('30');
+    }
 
     function handleClick(e: React.MouseEvent) {
         e.preventDefault();
@@ -31,7 +54,7 @@ export default function Calculator() {
         });
     }
 
-    const visibleFiltersClass = visibleFilters ? 'h-[20rem] md:h-72' : 'h-14';
+    const visibleFiltersClass = visibleFilters ? 'h-fit md:h-[22rem]' : 'h-14';
 
     return (
         <>
@@ -51,8 +74,39 @@ export default function Calculator() {
                     </h2>
 
                     <h3 className='my-2 text-red-400 max-w-[22rem]'>
-                        Indicar los dias en el que el computo debe suspenderse.
+                        Selecciona los dias en que se suspende el computo del plazo.
                     </h3>
+
+                    {/* Opciones predefinidas */}
+
+                    <div className='flex flex-col gap-2 mt-2 sm:gap-0 sm:flex-row justify-between w-full'>
+                        <div
+                            onClick={setLaboral}
+                            className={
+                                'p-2 border-[2px] hover:bg-gray-600 border-gray-500 cursor-pointer ' +
+                                (preFilter == 0 ? 'bg-gray-500 hover:bg-gray-500' : '')
+                            }
+                        >
+                            Derecho Laboral
+                        </div>
+                        <div
+                            onClick={setCivil}
+                            className={
+                                'p-2 border-[2px] hover:bg-gray-600 border-gray-500 cursor-pointer ' +
+                                (preFilter == 1 ? 'bg-gray-500 hover:bg-gray-500' : '')
+                            }
+                        >
+                            Derecho Civil
+                        </div>
+                        <div
+                            className={
+                                'p-2 border-[2px] border-gray-500 opacity-25 ' +
+                                (preFilter == 2 ? 'bg-gray-500 opacity-100' : '')
+                            }
+                        >
+                            Personalizado
+                        </div>
+                    </div>
 
                     {/* Filters */}
                     <div className='flex justify-between items-center w-full mt-4'>
@@ -61,9 +115,12 @@ export default function Calculator() {
                         </label>
                         <input
                             type='checkbox'
-                            onChange={() => setFilters({ ...filters, holidays: !filters.holidays })}
+                            onChange={() => {
+                                setFilters({ ...filters, holidays: !filters.holidays });
+                                setPreFilter(2);
+                            }}
                             name='feriados'
-                            defaultChecked
+                            checked={filters.holidays}
                             id='holidayCheck'
                         />
                     </div>
@@ -73,9 +130,13 @@ export default function Calculator() {
                             Durante semana de turismo
                         </label>
                         <input
+                            checked={filters.turismo}
                             disabled={filters.holidays}
                             type='checkbox'
-                            onChange={() => setFilters({ ...filters, turismo: !filters.turismo })}
+                            onChange={() => {
+                                setFilters({ ...filters, turismo: !filters.turismo });
+                                setPreFilter(2);
+                            }}
                             name='turismo'
                             id='turismoCheck'
                         />
@@ -87,9 +148,12 @@ export default function Calculator() {
                         </label>
                         <input
                             type='checkbox'
-                            onChange={() => setFilters({ ...filters, weekend: !filters.weekend })}
+                            onChange={() => {
+                                setFilters({ ...filters, weekend: !filters.weekend });
+                                setPreFilter(2);
+                            }}
                             name='finDeSemana'
-                            defaultChecked
+                            checked={filters.weekend}
                             id='weekendCheck'
                         />
                     </div>
@@ -100,11 +164,12 @@ export default function Calculator() {
                         </label>
                         <input
                             type='checkbox'
-                            onChange={() =>
-                                setFilters({ ...filters, judicialVacation: !filters.judicialVacation })
-                            }
+                            onChange={() => {
+                                setFilters({ ...filters, judicialVacation: !filters.judicialVacation });
+                                setPreFilter(2);
+                            }}
                             name='judicialVacations'
-                            defaultChecked
+                            checked={filters.judicialVacation}
                             id='judicialVacationsCheck'
                         />
                     </div>
@@ -142,7 +207,7 @@ export default function Calculator() {
 
                 <button
                     onClick={handleClick}
-                    className='bg-gray-700 border-2 border-white mt-2 w-fit text-white rounded-xl py-4 px-14 hover:bg-transparent'
+                    className='bg-gray-700 border-[1px] border-white mt-2 w-fit text-white rounded-xl py-2 px-14 hover:bg-transparent'
                     type='submit'
                 >
                     CALCULAR
