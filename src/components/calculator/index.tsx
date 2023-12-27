@@ -71,7 +71,7 @@ export default function Calculator() {
     return (
         <>
             <form className='text-center flex flex-col gap-4 items-center py-6'>
-                <p className='text-gray-300 text-center text-sm'>Fecha limite: 31 de Diciembre de 2024.</p>
+                <p className='text-gray-300 text-center text-sm'>Fecha límite: 31 de Diciembre de 2024.</p>
                 <div
                     className={
                         'transition-all duration-300 bg-gray-700 text-white w-full p-3 flex flex-col justify-between items-center overflow-hidden ' +
@@ -87,7 +87,7 @@ export default function Calculator() {
                     </h2>
 
                     <h3 className='my-2 text-red-400 max-w-[22rem]'>
-                        Selecciona los dias en que se suspende el computo del plazo.
+                        Selecciona los días en que se suspende el cómputo del plazo.
                     </h3>
 
                     {/* Opciones predefinidas */}
@@ -157,7 +157,7 @@ export default function Calculator() {
 
                     <div className='flex justify-between items-center w-full mt-4'>
                         <label className='' htmlFor='weekendCheck'>
-                            Durante sabados y domingos
+                            Durante sábados y domingos
                         </label>
                         <input
                             type='checkbox'
@@ -190,7 +190,7 @@ export default function Calculator() {
 
                 <div className='flex flex-col md:flex-row items-center gap-4'>
                     <label className='bg-orange py-2 md:py-8 w-60' htmlFor='idStartDate'>
-                        FECHA NOTIFICACION
+                        FECHA NOTIFICACIÓN
                     </label>
                     <input
                         onChange={(e) => setDate(e.target.value)}
@@ -206,7 +206,7 @@ export default function Calculator() {
 
                 <div className='flex flex-col md:flex-row items-center gap-4'>
                     <label className='bg-orange block py-2 md:py-8 w-60' htmlFor='idDeadLine'>
-                        PLAZO EN DIAS
+                        PLAZO EN DÍAS
                     </label>
                     <input
                         onChange={(e) => setCount(e.target.value)}
