@@ -42,12 +42,24 @@ export default function Calculator() {
 
     function handleClick(e: React.MouseEvent) {
         e.preventDefault();
+
+        let filter = 'Filtro seleccionado: ';
+
+        if (preFilter == 0) {
+            filter += 'Derecho Laboral';
+        } else if (preFilter == 1) {
+            filter += 'Derecho Civil';
+        } else {
+            filter += 'Personalizado';
+        }
+
         const response = calculateDate(date, count, {
             ...filters,
         });
 
         swal.fire({
             title: response,
+            text: filter,
             icon: response.includes('Error') ? 'warning' : undefined,
             confirmButtonColor: '#d4a05b',
             confirmButtonText: 'Cerrar',
@@ -59,6 +71,7 @@ export default function Calculator() {
     return (
         <>
             <form className='text-center flex flex-col gap-4 items-center py-6'>
+                <p className='text-gray-300 text-center text-sm'>Fecha limite: 31 de Diciembre de 2024.</p>
                 <div
                     className={
                         'transition-all duration-300 bg-gray-700 text-white w-full p-3 flex flex-col justify-between items-center overflow-hidden ' +
@@ -101,7 +114,7 @@ export default function Calculator() {
                         <div
                             className={
                                 'p-2 border-[2px] border-gray-500 opacity-25 ' +
-                                (preFilter == 2 ? 'bg-gray-500 opacity-100' : '')
+                                (preFilter == 2 ? 'bg-gray-500 opacity-[100%]' : '')
                             }
                         >
                             Personalizado
@@ -204,7 +217,6 @@ export default function Calculator() {
                         required
                     />
                 </div>
-
                 <button
                     onClick={handleClick}
                     className='bg-gray-700 border-[1px] border-white mt-2 w-fit text-white rounded-xl py-2 px-14 hover:bg-transparent'

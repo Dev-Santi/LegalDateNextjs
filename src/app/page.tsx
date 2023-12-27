@@ -3,8 +3,7 @@ import Calculator from '@/components/calculator';
 
 export default function Home() {
     return (
-        <main className='mx-auto py-12 w-fit flex flex-col items-center justify-center min-h-[calc(100vh-5rem)]'>
-            <p className='text-gray-300 text-center text-sm'>Fecha limite: 31 de Diciembre de 2024.</p>
+        <main className='mx-auto w-fit flex flex-col items-center justify-center min-h-[calc(100vh-5rem)]'>
             <Calculator />
 
             <Link
