@@ -74,7 +74,7 @@ export default function Calculator() {
                 <p className='text-gray-300 text-center text-sm'>Fecha límite: 31 de Diciembre de 2024.</p>
                 <div
                     className={
-                        'transition-all duration-300 bg-gray-700 text-white w-full p-3 flex flex-col justify-between items-center overflow-hidden ' +
+                        'transition-all duration-300 bg-gray-700 text-white w-full p-3 flex flex-col items-center overflow-hidden ' +
                         visibleFiltersClass
                     }
                 >
