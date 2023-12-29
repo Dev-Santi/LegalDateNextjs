@@ -16,7 +16,7 @@ export default function page() {
                 para la práctica jurídica.
             </p>
             <p>
-                <h3 className='text-xl font-semibold mt-6 mb-4'>¿Cómo utilizar la aplicación?</h3>
+                <h3 className='text-xl font-semibold mt-4 mb-4'>¿Cómo utilizar la aplicación?</h3>
                 <ol className='flex flex-col gap-8 list-decimal'>
                     <li>
                         <h2 className='text-orange font-bold'>
