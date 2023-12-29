@@ -45,9 +45,9 @@ export function calculateDate(dateSelected: string, countString: string, filters
                     !['Sabado,Domingo'].includes(currentDay.name) &&
                     !currentDay.isJudicialVacation
                 ) {
-                    return `${currentDay.name} ${currentDay.date.split('-')[2]} de ${
-                        currentMonth.monthName
-                    } de ${currentYear.yearNumber}`;
+                    return `${currentDay.name} ${
+                        currentDay.date.split('-')[2]
+                    } de ${currentMonth.monthName.toLowerCase()} de ${currentYear.yearNumber}`;
                 }
 
                 // Search for the date selected at the end to start the countdown in the next day
