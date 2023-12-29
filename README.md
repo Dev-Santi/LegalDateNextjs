@@ -16,4 +16,4 @@
         </ul>
         <li>Finalmente, volver a revisar que los datos ingresados coincidan con las particularidades de tu caso y ejecutar el programa para obtener el resultado.</li>
     </ol>
-    <link href='https://www.justoatiempo.pro/'>Visita el sitio web</link>
+    <a href='https://www.justoatiempo.pro/'>Visita el sitio web</a>
