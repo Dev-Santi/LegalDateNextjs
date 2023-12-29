@@ -7,6 +7,21 @@ export const metadata: Metadata = {
     title: 'Calculadora de plazos',
     description:
         'Calcula fechas termino en Uruguay de manera fácil y precisa. Introduce una fecha y el plazo requerido, selecciona los tipos de fechas que deben saltearse y se te proporcionará la fecha de vencimiento. Optimiza tu gestión de plazos legales de manera eficiente y evita posibles incumplimientos.',
+    authors: [
+        {
+            name: 'Santiago Larrosa Bauza',
+            url: 'https://www.linkedin.com/in/santiago-larrosa-bauz%C3%A1-99b740251/',
+        },
+    ],
+    keywords: [
+        'fechas termino',
+        'calendario legal',
+        'calculadora de plazos',
+        'derecho',
+        'judicial',
+        'calcular plazo juridico',
+        'plazos administrativos',
+    ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
