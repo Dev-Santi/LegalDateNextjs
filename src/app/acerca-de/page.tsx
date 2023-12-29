@@ -44,9 +44,8 @@ export default function page() {
                         <h2 className='text-orange font-bold'>Ingresar los datos:</h2>
                         <ul className='flex flex-col gap-4 ml-10 mt-2 list-disc'>
                             <li>
-                                <span className='font-semibold'>Fecha de notificación: </span>
-                                Al hacer click sobre el ícono con forma de calendario puede desplegarlo y
-                                seleccionar una fecha.
+                                <span className='font-semibold'>Fecha de notificación: </span>Al hacer clic
+                                sobre el campo, se despliega un calendario permitiendo seleccionar una fecha.
                             </li>
                             <li>
                                 <span className='font-semibold'>Plazo en días: </span>

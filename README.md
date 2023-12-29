@@ -11,7 +11,7 @@
         </ul>
         <li>Ingresar los datos:</li>
         <ul>
-            <li><strong>Fecha de notificación:</strong> Al hacer clic sobre el ícono con forma de calendario, puedes desplegarlo y seleccionar una fecha.</li>
+            <li><strong>Fecha de notificación:</strong> Al hacer clic sobre el campo, se despliega un calendario permitiendo seleccionar una fecha.</li>
             <li><strong>Plazo en días:</strong> Se debe ingresar el plazo. Dependiendo del filtro seleccionado, el valor predefinido puede ser de 15 o 30 días.</li>
         </ul>
         <li>Finalmente, volver a revisar que los datos ingresados coincidan con las particularidades de tu caso y ejecutar el programa para obtener el resultado.</li>
