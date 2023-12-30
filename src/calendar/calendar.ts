@@ -2225,7 +2225,7 @@ export default {
                             date: '2023-12-24',
                             name: 'Domingo',
                             holiday: false,
-                            isJudicialVacation: true,
+                            isJudicialVacation: false,
                         },
                         {
                             date: '2023-12-25',
@@ -4498,7 +4498,7 @@ export default {
                             date: '2024-12-24',
                             name: 'Martes',
                             holiday: false,
-                            isJudicialVacation: true,
+                            isJudicialVacation: false,
                         },
                         {
                             date: '2024-12-25',
