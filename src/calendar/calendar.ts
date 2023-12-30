@@ -878,7 +878,10 @@ export default {
                         {
                             date: '2023-05-22',
                             name: 'Lunes',
-                            holiday: { date: '2023-05-22', description: 'Batalla de las piedras' },
+                            holiday: {
+                                date: '2023-05-22',
+                                description: 'Batalla de las piedras',
+                            },
                             isJudicialVacation: false,
                         },
                         {
@@ -1051,7 +1054,10 @@ export default {
                         {
                             date: '2023-06-19',
                             name: 'Lunes',
-                            holiday: { date: '2023-06-19', description: 'Natalicio de Artigas' },
+                            holiday: {
+                                date: '2023-06-19',
+                                description: 'Natalicio de Artigas',
+                            },
                             isJudicialVacation: false,
                         },
                         {
@@ -1230,7 +1236,10 @@ export default {
                         {
                             date: '2023-07-18',
                             name: 'Martes',
-                            holiday: { date: '2023-07-18', description: 'Jura de la constitucion' },
+                            holiday: {
+                                date: '2023-07-18',
+                                description: 'Jura de la constitucion',
+                            },
                             isJudicialVacation: false,
                         },
                         {
@@ -1463,7 +1472,10 @@ export default {
                         {
                             date: '2023-08-25',
                             name: 'Viernes',
-                            holiday: { date: '2023-08-25', description: 'Dia de la nostalgia' },
+                            holiday: {
+                                date: '2023-08-25',
+                                description: 'Dia de la nostalgia',
+                            },
                             isJudicialVacation: false,
                         },
                         {
@@ -1785,7 +1797,10 @@ export default {
                         {
                             date: '2023-10-16',
                             name: 'Lunes',
-                            holiday: { date: '2023-10-16', description: 'Dia de la alimentacion' },
+                            holiday: {
+                                date: '2023-10-16',
+                                description: 'Dia de la alimentacion',
+                            },
                             isJudicialVacation: false,
                         },
                         {
@@ -3315,7 +3330,10 @@ export default {
                         {
                             date: '2024-06-19',
                             name: 'Miercoles',
-                            holiday: { date: '2024-06-19', description: 'Natalicio de Artigas' },
+                            holiday: {
+                                date: '2024-06-19',
+                                description: 'Natalicio de Artigas',
+                            },
                             isJudicialVacation: false,
                         },
                         {
@@ -3494,7 +3512,10 @@ export default {
                         {
                             date: '2024-07-18',
                             name: 'Jueves',
-                            holiday: { date: '2024-07-18', description: 'Jura de la constitucion' },
+                            holiday: {
+                                date: '2024-07-18',
+                                description: 'Jura de la constitucion',
+                            },
                             isJudicialVacation: false,
                         },
                         {
@@ -3727,7 +3748,10 @@ export default {
                         {
                             date: '2024-08-25',
                             name: 'Domingo',
-                            holiday: { date: '2024-08-25', description: 'Dia de la nostalgia' },
+                            holiday: {
+                                date: '2024-08-25',
+                                description: 'Dia de la nostalgia',
+                            },
                             isJudicialVacation: false,
                         },
                         {

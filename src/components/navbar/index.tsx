@@ -44,6 +44,11 @@ export default function Navbar() {
                             </Link>
                         </li>
                         <li>
+                            <Link onClick={handleClick} href='/calendario'>
+                                Calendario
+                            </Link>
+                        </li>
+                        <li>
                             <Link onClick={handleClick} href='/acerca-de'>
                                 Sobre la app
                             </Link>
@@ -59,6 +64,14 @@ export default function Navbar() {
                     <li>
                         <Link className={path == '/' ? 'text-gray-500' : 'hover:text-orange'} href='/'>
                             Inicio
+                        </Link>
+                    </li>
+                    <li>
+                        <Link
+                            className={path == '/calendario' ? 'text-gray-500' : 'hover:text-orange'}
+                            href='/calendario'
+                        >
+                            Calendario
                         </Link>
                     </li>
                     <li>
