@@ -41,10 +41,16 @@ export default function page() {
                     <span className='py-2'>Viernes</span>
                     <span className='py-2'>Sábado</span>
                     <span className='py-2'>Domingo</span>
-                    {alocateEmptyDivsUntilFirstDay(calendar.years[1].months[8].days[0])}
-                    {calendar.years[1].months[8].days.map((day) => {
+                    {alocateEmptyDivsUntilFirstDay(calendar.years[1].months[0].days[0])}
+                    {calendar.years[1].months[0].days.map((day) => {
+                        let classname = day.holiday ? 'bg-red-400' : '';
                         return (
-                            <div className='bg-gray-900 text-xl flex items-center justify-center h-[5rem]'>
+                            <div
+                                className={
+                                    'bg-gray-900 text-xl flex items-center justify-center h-[5rem] ' +
+                                    classname
+                                }
+                            >
                                 {day.date.split('-')[2]}
                             </div>
                         );
