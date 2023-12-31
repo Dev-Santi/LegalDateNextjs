@@ -2,12 +2,25 @@
 
 import calendar from '@/calendar/calendar';
 import Swal from 'sweetalert2';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 export default function page() {
     const [currentMonth, setCurrentMonth] = useState(calendar.years[1].months[0]);
+
+    useEffect(() => {
+        try {
+            const localStorageCurrentMonth = localStorage.getItem('currentMonth');
+
+            if (localStorageCurrentMonth) {
+                setCurrentMonth(JSON.parse(localStorageCurrentMonth));
+                console.log('obteniendo');
+            }
+        } catch (e) {
+            console.log('Error obteniendo último mes visualizado en el local storage');
+        }
+    }, []);
 
     const currentYear = currentMonth.days[0].date.split('-')[0];
     const firstDayOfCurrentMonth = currentMonth.days[0];
@@ -49,12 +62,22 @@ export default function page() {
 
         let newCurrentMonth;
         if (newYear) {
-            newCurrentMonth = newYear.months.find((month) => {
-                return month.monthName == currentMonth.monthName;
-            });
+            if (nextOrPrevious == 1) {
+                newCurrentMonth = newYear.months[0];
+            } else if (nextOrPrevious == -1) {
+                newCurrentMonth = newYear.months[11];
+            }
         }
 
         if (newCurrentMonth) {
+            try {
+                localStorage.setItem('currentMonth', JSON.stringify(newCurrentMonth));
+                console.log('guardando');
+            } catch (e) {
+                console.log(
+                    'Error al intentar guardar último mes visualizado en el local storage'
+                );
+            }
             setCurrentMonth(newCurrentMonth);
         }
     }
@@ -77,6 +100,17 @@ export default function page() {
             currentMonthIndex != undefined &&
             currentMonthIndex < 11
         ) {
+            try {
+                localStorage.setItem(
+                    'currentMonth',
+                    JSON.stringify(year.months[currentMonthIndex + nextOrPrevious])
+                );
+                console.log('guardando');
+            } catch (e) {
+                console.log(
+                    'Error al intentar guardar último mes visualizado en el local storage'
+                );
+            }
             setCurrentMonth(year.months[currentMonthIndex + nextOrPrevious]);
         } else if (
             nextOrPrevious == -1 &&
@@ -84,6 +118,17 @@ export default function page() {
             currentMonthIndex != undefined &&
             currentMonthIndex > 0
         ) {
+            try {
+                localStorage.setItem(
+                    'currentMonth',
+                    JSON.stringify(year.months[currentMonthIndex + nextOrPrevious])
+                );
+                console.log('guardando');
+            } catch (e) {
+                console.log(
+                    'Error al intentar guardar último mes visualizado en el local storage'
+                );
+            }
             setCurrentMonth(year.months[currentMonthIndex + nextOrPrevious]);
         }
     }
@@ -93,26 +138,50 @@ export default function page() {
             <div className='w-[40rem] h-fit bg-gray-900 shadow-xl rounded-xl overflow-hidden'>
                 {/* Año */}
                 <div className='flex'>
-                    <button onClick={() => changeYear(-1)} className='px-5 hover:text-orange'>
+                    <button
+                        onClick={() => {
+                            changeYear(-1);
+                            // saveLastCalendar();
+                        }}
+                        className='px-5 hover:text-orange'
+                    >
                         <FaArrowLeft />
                     </button>
                     <h2 className='bg-gray-700 w-full py-2 text-center text-3xl border-b-2 border-gray-500'>
                         {currentYear}
                     </h2>
-                    <button onClick={() => changeYear(1)} className='px-5 hover:text-orange'>
+                    <button
+                        onClick={() => {
+                            changeYear(1);
+                            // saveLastCalendar();
+                        }}
+                        className='px-5 hover:text-orange'
+                    >
                         <FaArrowRight />
                     </button>
                 </div>
 
                 {/* Mes */}
                 <div className='flex'>
-                    <button onClick={() => changeMonth(-1)} className='px-5 hover:text-orange'>
+                    <button
+                        onClick={() => {
+                            changeMonth(-1);
+                            // saveLastCalendar();
+                        }}
+                        className='px-5 hover:text-orange'
+                    >
                         <FaArrowLeft />
                     </button>
                     <h2 className='bg-gray-700 w-full py-2 text-center text-3xl border-b-2 border-gray-500'>
                         {currentMonth.monthName}
                     </h2>
-                    <button onClick={() => changeMonth(1)} className='px-5 hover:text-orange'>
+                    <button
+                        onClick={() => {
+                            changeMonth(1);
+                            // saveLastCalendar();
+                        }}
+                        className='px-5 hover:text-orange'
+                    >
                         <FaArrowRight />
                     </button>
                 </div>
@@ -131,13 +200,20 @@ export default function page() {
                         return (
                             <div
                                 key={day.date}
-                                className={
-                                    'bg-gray-900 relative text-xl flex flex-col items-center justify-center h-[5rem] ' +
-                                    (day.isJudicialVacation && 'bg-orange')
-                                }
+                                className='bg-gray-900 relative text-xl flex flex-col items-center justify-center h-[5rem]'
                             >
                                 {/* Numero del dia */}
-                                <span>{day.date.split('-')[2]}</span>
+                                <span
+                                    className={
+                                        day.isJudicialVacation
+                                            ? 'text-orange'
+                                            : ['Sabado', 'Domingo'].includes(day.name)
+                                            ? 'text-gray-400'
+                                            : ''
+                                    }
+                                >
+                                    {day.date.split('-')[2]}
+                                </span>
 
                                 {/* Feriados */}
                                 {day.holiday && (

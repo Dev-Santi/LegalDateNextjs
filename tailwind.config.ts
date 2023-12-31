@@ -14,6 +14,7 @@ const config: Config = {
                     fluor: '#71ff54',
                 },
                 orange: '#d4a05b',
+                orange_opacity: '#d4a05b10',
             },
         },
     },
