@@ -15,7 +15,6 @@ export default function page() {
 
             if (localStorageCurrentMonth) {
                 setCurrentMonth(JSON.parse(localStorageCurrentMonth));
-                console.log('obteniendo');
             }
         } catch (e) {
             console.log('Error obteniendo último mes visualizado en el local storage');
@@ -72,7 +71,6 @@ export default function page() {
         if (newCurrentMonth) {
             try {
                 localStorage.setItem('currentMonth', JSON.stringify(newCurrentMonth));
-                console.log('guardando');
             } catch (e) {
                 console.log(
                     'Error al intentar guardar último mes visualizado en el local storage'
@@ -105,7 +103,6 @@ export default function page() {
                     'currentMonth',
                     JSON.stringify(year.months[currentMonthIndex + nextOrPrevious])
                 );
-                console.log('guardando');
             } catch (e) {
                 console.log(
                     'Error al intentar guardar último mes visualizado en el local storage'
@@ -123,7 +120,6 @@ export default function page() {
                     'currentMonth',
                     JSON.stringify(year.months[currentMonthIndex + nextOrPrevious])
                 );
-                console.log('guardando');
             } catch (e) {
                 console.log(
                     'Error al intentar guardar último mes visualizado en el local storage'
@@ -134,14 +130,13 @@ export default function page() {
     }
 
     return (
-        <main className='py-12 gap-5 mt-10 flex justify-center items-center flex-col text-white'>
-            <div className='w-[40rem] h-fit bg-gray-900 shadow-xl rounded-xl overflow-hidden'>
+        <main className='mt-10 flex min-h-[calc(100vh-6rem)] justify-center items-center flex-col text-white'>
+            <div className='min-w-[22rem] w-full scale-90 md:scale-100 md:w-[45rem] h-fit bg-gray-900 shadow-xl rounded-xl overflow-hidden'>
                 {/* Año */}
                 <div className='flex'>
                     <button
                         onClick={() => {
                             changeYear(-1);
-                            // saveLastCalendar();
                         }}
                         className='px-5 hover:text-orange'
                     >
@@ -153,7 +148,6 @@ export default function page() {
                     <button
                         onClick={() => {
                             changeYear(1);
-                            // saveLastCalendar();
                         }}
                         className='px-5 hover:text-orange'
                     >
@@ -166,7 +160,6 @@ export default function page() {
                     <button
                         onClick={() => {
                             changeMonth(-1);
-                            // saveLastCalendar();
                         }}
                         className='px-5 hover:text-orange'
                     >
@@ -178,7 +171,6 @@ export default function page() {
                     <button
                         onClick={() => {
                             changeMonth(1);
-                            // saveLastCalendar();
                         }}
                         className='px-5 hover:text-orange'
                     >
@@ -188,19 +180,30 @@ export default function page() {
 
                 {/* Casillas */}
                 <div className='grid text-center grid-cols-7'>
-                    <span className='py-2'>Lunes</span>
-                    <span className='py-2'>Martes</span>
-                    <span className='py-2'>Miércoles</span>
-                    <span className='py-2'>Jueves</span>
-                    <span className='py-2'>Viernes</span>
-                    <span className='py-2'>Sábado</span>
-                    <span className='py-2'>Domingo</span>
+                    <span className='hidden md:block text-sm md:text-base py-2'>Lunes</span>
+                    <span className='hidden md:block text-sm md:text-base py-2'>Martes</span>
+                    <span className='hidden md:block text-sm md:text-base py-2'>
+                        Miércoles
+                    </span>
+                    <span className='hidden md:block text-sm md:text-base py-2'>Jueves</span>
+                    <span className='hidden md:block text-sm md:text-base py-2'>Viernes</span>
+                    <span className='hidden md:block text-sm md:text-base py-2'>Sábado</span>
+                    <span className='hidden md:block text-sm md:text-base py-2'>Domingo</span>
+
+                    <span className='md:hidden text-sm md:text-base py-2'>Lun</span>
+                    <span className='md:hidden text-sm md:text-base py-2'>Mar</span>
+                    <span className='md:hidden text-sm md:text-base py-2'>Mie</span>
+                    <span className='md:hidden text-sm md:text-base py-2'>Jue</span>
+                    <span className='md:hidden text-sm md:text-base py-2'>Vie</span>
+                    <span className='md:hidden text-sm md:text-base py-2'>Sáb</span>
+                    <span className='md:hidden text-sm md:text-base py-2'>Dom</span>
+
                     {alocateEmptyDivsUntilFirstDay(firstDayOfCurrentMonth)}
                     {currentMonth.days.map((day) => {
                         return (
                             <div
                                 key={day.date}
-                                className='bg-gray-900 relative text-xl flex flex-col items-center justify-center h-[5rem]'
+                                className='bg-gray-900 relative text-xl flex flex-col items-center justify-center h-[3.2rem] md:h-[5rem]'
                             >
                                 {/* Numero del dia */}
                                 <span
@@ -233,6 +236,45 @@ export default function page() {
                             </div>
                         );
                     })}
+                </div>
+            </div>
+            <div>
+                <div className='bg-gray-900 relative text-base md:text-xl flex flex-col rounded-xl rounded-t-none'>
+                    {currentMonth.days.find((day) => {
+                        return day.isJudicialVacation || day.holiday;
+                    }) && <h2 className='text-center mt-2'>Referencias</h2>}
+
+                    {currentMonth.days.find((day) => {
+                        return day.isJudicialVacation;
+                    }) && (
+                        <div className='flex items-center gap-5 px-6 py-3'>
+                            <h2 className='flex justify-center w-16'>
+                                <div className='bg-orange p-2 w-fit rounded-full'></div>
+                            </h2>
+                            <FaArrowRight className='text-sm' />
+                            <h2>Feria Judicial</h2>
+                        </div>
+                    )}
+
+                    {currentMonth.days.find((day) => {
+                        return day.holiday;
+                    }) && (
+                        <div className='flex items-center gap-5 px-6 py-3'>
+                            <h2
+                                onClick={() =>
+                                    Swal.fire({
+                                        title: 'Descripción del feriado',
+                                        confirmButtonColor: '#f87171',
+                                    })
+                                }
+                                className='text-red-400 w-16 cursor-pointer hover:text-red-200'
+                            >
+                                Feriado
+                            </h2>
+                            <FaArrowRight className='text-sm' />
+                            <h2>Click para ver</h2>
+                        </div>
+                    )}
                 </div>
             </div>
         </main>

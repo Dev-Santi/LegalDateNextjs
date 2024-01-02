@@ -9,7 +9,7 @@ export default {
                         {
                             date: '2023-01-01',
                             name: 'Domingo',
-                            holiday: { date: '2023-01-01', description: 'Primer dia' },
+                            holiday: { date: '2023-01-01', description: 'Primer dia del año' },
                             isJudicialVacation: true,
                         },
                         {
@@ -1474,7 +1474,7 @@ export default {
                             name: 'Viernes',
                             holiday: {
                                 date: '2023-08-25',
-                                description: 'Dia de la nostalgia',
+                                description: 'Dia de la independencia',
                             },
                             isJudicialVacation: false,
                         },
@@ -2282,7 +2282,7 @@ export default {
                         {
                             date: '2024-01-01',
                             name: 'Lunes',
-                            holiday: { date: '2024-01-01', description: 'Primer dia' },
+                            holiday: { date: '2024-01-01', description: 'Primer dia del año' },
                             isJudicialVacation: true,
                         },
                         {
@@ -3750,7 +3750,7 @@ export default {
                             name: 'Domingo',
                             holiday: {
                                 date: '2024-08-25',
-                                description: 'Dia de la nostalgia',
+                                description: 'Dia de la independencia',
                             },
                             isJudicialVacation: false,
                         },
