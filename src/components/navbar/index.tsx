@@ -39,17 +39,29 @@ export default function Navbar() {
                 >
                     <ul className='flex flex-col gap-5 text-xl'>
                         <li>
-                            <Link onClick={handleClick} href='/'>
+                            <Link
+                                className={path == '/' ? 'opacity-50' : ''}
+                                onClick={handleClick}
+                                href='/'
+                            >
                                 Inicio
                             </Link>
                         </li>
                         <li>
-                            <Link onClick={handleClick} href='/calendario'>
+                            <Link
+                                className={path == '/calendario' ? 'opacity-50' : ''}
+                                onClick={handleClick}
+                                href='/calendario'
+                            >
                                 Calendario
                             </Link>
                         </li>
                         <li>
-                            <Link onClick={handleClick} href='/acerca-de'>
+                            <Link
+                                className={path == '/acerca-de' ? 'opacity-50' : ''}
+                                onClick={handleClick}
+                                href='/acerca-de'
+                            >
                                 Sobre la app
                             </Link>
                         </li>
