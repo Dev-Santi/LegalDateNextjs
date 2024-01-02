@@ -43,7 +43,7 @@ export default function page() {
                 emptyDays.push(
                     <div
                         key={i}
-                        className='text-xl flex items-center justify-center h-[5rem]'
+                        className='bg-gray-900 relative text-xl flex flex-col items-center justify-center h-[3.2rem] md:h-[5rem]'
                     ></div>
                 );
             }
@@ -222,6 +222,7 @@ export default function page() {
 
                 {/* Casillas */}
                 <div className='grid text-center grid-cols-7'>
+                    {/* Desktop */}
                     <span className='hidden md:block text-sm md:text-base py-3'>Lunes</span>
                     <span className='hidden md:block text-sm md:text-base py-3'>Martes</span>
                     <span className='hidden md:block text-sm md:text-base py-3'>
@@ -231,6 +232,8 @@ export default function page() {
                     <span className='hidden md:block text-sm md:text-base py-3'>Viernes</span>
                     <span className='hidden md:block text-sm md:text-base py-3'>Sábado</span>
                     <span className='hidden md:block text-sm md:text-base py-3'>Domingo</span>
+
+                    {/* Mobile */}
 
                     <span className='md:hidden text-sm md:text-base py-2'>Lun</span>
                     <span className='md:hidden text-sm md:text-base py-2'>Mar</span>
