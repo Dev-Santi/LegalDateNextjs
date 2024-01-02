@@ -131,7 +131,7 @@ export default function page() {
 
     function Referencias() {
         return (
-            <div className='bg-gray-900 relative text-base md:text-xl flex flex-col rounded-xl rounded-t-none'>
+            <div className='bg-gray-900 hidden md:flex relative text-base md:text-xl flex-col rounded-xl rounded-t-none'>
                 {currentMonth.days.find((day) => {
                     return day.isJudicialVacation || day.holiday;
                 }) && <h2 className='text-center mt-2'>Referencias</h2>}
@@ -172,7 +172,7 @@ export default function page() {
     }
 
     return (
-        <main className='flex mt-2 md:mt-24 justify-center items-center flex-col text-white'>
+        <main className='flex mt-12 md:mt-24 justify-center items-center flex-col text-white'>
             <div className='min-w-[21rem] w-full scale-90 md:scale-100 md:w-[45rem] h-fit bg-gray-900 shadow-xl rounded-xl overflow-hidden pb-2'>
                 {/* Año */}
                 <div className='flex'>

@@ -21,20 +21,20 @@ export default function Navbar() {
                 <span className='text-orange text-3xl'>
                     <GoLaw />
                 </span>
-                <span className=' tracking-wider font-semibold'>JUSTO A TIEMPO</span>
+                <span className='tracking-wider font-semibold'>JUSTO A TIEMPO</span>
             </Link>
 
             {/* Mobile nav */}
 
             <div className='md:hidden'>
                 <button onClick={handleClick} className='relative z-20 text-4xl text-orange'>
-                    {!isMenuActive ? <RxHamburgerMenu /> : <VscClose />}
+                    {!isMenuActive ? <RxHamburgerMenu /> : <VscClose className='text-white' />}
                 </button>
 
                 <nav
                     className={
-                        'absolute z-10 bg-white text-black top-0 right-0 p-5 pt-24 text-center rounded-bl-xl ' +
-                        (isMenuActive ? 'block' : 'hidden')
+                        'absolute z-10 shadow-xl transition-all duration-[400ms] bg-orange text-white top-0 right-0 p-5 pt-24 text-center rounded-bl-xl ' +
+                        (isMenuActive ? 'top-0' : 'top-[-20rem]')
                     }
                 >
                     <ul className='flex flex-col gap-5 text-xl'>
@@ -62,13 +62,18 @@ export default function Navbar() {
             <nav className='hidden md:block'>
                 <ul className='flex gap-5 text-white tracking-wider uppercase'>
                     <li>
-                        <Link className={path == '/' ? 'text-gray-500' : 'hover:text-orange'} href='/'>
+                        <Link
+                            className={path == '/' ? 'text-gray-500' : 'hover:text-orange'}
+                            href='/'
+                        >
                             Inicio
                         </Link>
                     </li>
                     <li>
                         <Link
-                            className={path == '/calendario' ? 'text-gray-500' : 'hover:text-orange'}
+                            className={
+                                path == '/calendario' ? 'text-gray-500' : 'hover:text-orange'
+                            }
                             href='/calendario'
                         >
                             Calendario
@@ -76,7 +81,9 @@ export default function Navbar() {
                     </li>
                     <li>
                         <Link
-                            className={path == '/acerca-de' ? 'text-gray-500' : 'hover:text-orange'}
+                            className={
+                                path == '/acerca-de' ? 'text-gray-500' : 'hover:text-orange'
+                            }
                             href='/acerca-de'
                         >
                             Sobre la app

@@ -28,9 +28,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html className='' lang='es'>
             <body className={openSans.className + ' overflow-x-hidden'}>
-                <div className='min-h-screen bg-[url("/bg.jpg")] md:bg-fixed bg-cover bg-bottom'>
-                    <div className='min-h-screen bg-[rgba(0,37,47,0.9)]'>
-                        <div className='max-w-[64rem] mx-auto px-6 pt-8'>
+                <div className='overflow-x-hidden min-h-screen bg-[url("/bg.jpg")] md:bg-fixed bg-cover bg-bottom'>
+                    <div className='overflow-x-hidden min-h-screen bg-[rgba(0,37,47,0.9)]'>
+                        <div className='overflow-x-hidden max-w-[64rem] mx-auto px-6 pt-8'>
                             <Navbar />
                             {children}
                         </div>
