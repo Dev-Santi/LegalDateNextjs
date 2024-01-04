@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import Calculator from '@/components/calculator';
+import Link from "next/link";
+import Calculator from "@/components/calculator";
 
 export default function Home() {
     return (
@@ -7,11 +7,12 @@ export default function Home() {
             <Calculator />
 
             <Link
-                className='text-blue-400 text-sm text-center mt-6 hover:text-white'
+                className='text-blue-400 opacity-55 text-sm text-center mt-6 hover:text-white hover:opacity-100'
                 href='https://www.linkedin.com/in/santiago-larrosa-bauz%C3%A1-99b740251/'
                 target='_blank'
             >
-                ¿Tienes ideas para aportar? ¿Has encontrado algún problema en la aplicacion? ¡Quiero saberlo!
+                ¿Tienes ideas para aportar? ¿Has encontrado algún problema en la aplicacion?
+                ¡Quiero saberlo!
             </Link>
         </main>
     );
