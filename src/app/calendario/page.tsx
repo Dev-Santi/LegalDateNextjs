@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 
 export default function page() {
     const { data: session, status } = useSession();
+    console.log(session);
 
     const [currentMonth, setCurrentMonth] = useState(calendar.years[1].months[0]);
 

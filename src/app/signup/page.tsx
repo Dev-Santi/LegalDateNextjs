@@ -9,6 +9,7 @@ import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 
@@ -21,20 +22,26 @@ export default function page() {
     async function handleSubmit(e: FormEvent) {
         e.preventDefault();
         try {
-            const res = await axios.post("/api/signup", {
+            const signUpResponse = await axios.post("/api/auth/signup", {
                 name: name,
                 email: email,
                 password: pass,
             });
 
-            if (res.status === 200) {
+            if (signUpResponse.status === 200) {
                 await Swal.fire({
                     title: "¡Registro exitoso!",
                     confirmButtonColor: "green",
                 });
             }
 
-            router.push("/login");
+            const sigInResponse = await signIn("credentials", {
+                email: signUpResponse.data.message.email,
+                password: pass,
+                redirect: false,
+            });
+
+            router.push("/");
         } catch (e) {
             console.log(e);
 
@@ -61,11 +68,6 @@ export default function page() {
                 });
             }
         }
-
-        //Reset
-        setName("");
-        setEmail("");
-        setPass("");
     }
 
     return (
