@@ -1,28 +1,28 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { FormEvent } from "react";
-import { GiPadlock } from "react-icons/gi";
-import { ImEnter } from "react-icons/im";
-import { MdPerson } from "react-icons/md";
-import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
+import Link from 'next/link';
+import { FormEvent } from 'react';
+import { GiPadlock } from 'react-icons/gi';
+import { ImEnter } from 'react-icons/im';
+import { MdPerson } from 'react-icons/md';
+import { MdOutlineDriveFileRenameOutline } from 'react-icons/md';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
-import axios, { AxiosError } from "axios";
-import Swal from "sweetalert2";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
+import axios, { AxiosError } from 'axios';
+import Swal from 'sweetalert2';
 
 export default function page() {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [pass, setPass] = useState("");
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
     const router = useRouter();
 
     async function handleSubmit(e: FormEvent) {
         e.preventDefault();
         try {
-            const signUpResponse = await axios.post("/api/auth/signup", {
+            const signUpResponse = await axios.post('/api/auth/signup', {
                 name: name,
                 email: email,
                 password: pass,
@@ -30,41 +30,41 @@ export default function page() {
 
             if (signUpResponse.status === 200) {
                 await Swal.fire({
-                    title: "¡Registro exitoso!",
-                    confirmButtonColor: "green",
+                    title: '¡Registro exitoso!',
+                    confirmButtonColor: 'green',
                 });
+
+                const sigInResponse = await signIn('credentials', {
+                    email: signUpResponse.data.message.email,
+                    password: pass,
+                    redirect: false,
+                });
+
+                router.push('/');
             }
-
-            const sigInResponse = await signIn("credentials", {
-                email: signUpResponse.data.message.email,
-                password: pass,
-                redirect: false,
-            });
-
-            router.push("/");
         } catch (e) {
             console.log(e);
 
             if (e instanceof AxiosError) {
                 const message = e.response?.data.message;
 
-                if (message === "Usuario ya existe") {
+                if (message === 'Usuario ya existe') {
                     Swal.fire({
-                        title: "El correo que intentas utilizar ya está registrado.",
-                        confirmButtonColor: "red",
+                        title: 'El correo que intentas utilizar ya está registrado.',
+                        confirmButtonColor: 'red',
                     });
                 }
-                if (message === "Contraseña demasiado corta") {
+                if (message === 'Contraseña demasiado corta') {
                     Swal.fire({
-                        title: "Contraseña demasiado corta",
-                        confirmButtonColor: "red",
+                        title: 'Contraseña demasiado corta',
+                        confirmButtonColor: 'red',
                     });
                 }
             } //Algun otro error
             else {
                 Swal.fire({
-                    title: "Ha ocurrido un error, intente nuevamente.",
-                    confirmButtonColor: "red",
+                    title: 'Ha ocurrido un error, intente nuevamente.',
+                    confirmButtonColor: 'red',
                 });
             }
         }
@@ -145,7 +145,7 @@ export default function page() {
                         ¿Ya tienes una cuenta?
                     </p>
                     <Link
-                        href={"/login"}
+                        href={'/login'}
                         className='text-white text-center shadow-md py-1 bg-gray-700 w-full hover:bg-orange'
                     >
                         Iniciar sesion

@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { GoLaw } from "react-icons/go";
-import { RxHamburgerMenu } from "react-icons/rx";
-import { VscClose } from "react-icons/vsc";
-import { IoPersonCircleOutline } from "react-icons/io5";
+import { useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { GoLaw } from 'react-icons/go';
+import { RxHamburgerMenu } from 'react-icons/rx';
+import { VscClose } from 'react-icons/vsc';
+import { IoPersonCircleOutline } from 'react-icons/io5';
 
 export default function Navbar() {
     const [isMenuActive, setIsMenuActive] = useState(false);
@@ -34,14 +34,14 @@ export default function Navbar() {
 
                 <nav
                     className={
-                        "absolute z-10 shadow-xl transition-all duration-[400ms] bg-orange text-white top-0 right-0 p-5 pt-24 text-center rounded-bl-xl " +
-                        (isMenuActive ? "top-0" : "top-[-22rem]")
+                        'absolute z-10 shadow-xl transition-all duration-[400ms] bg-orange text-white top-0 right-0 p-5 pt-24 text-center rounded-bl-xl ' +
+                        (isMenuActive ? 'top-0' : 'top-[-22rem]')
                     }
                 >
                     <ul className='flex flex-col gap-5 text-xl'>
                         <li>
                             <Link
-                                className={path == "/" ? "opacity-50" : ""}
+                                className={path == '/' ? 'opacity-50' : ''}
                                 onClick={handleClick}
                                 href='/'
                             >
@@ -50,7 +50,7 @@ export default function Navbar() {
                         </li>
                         <li>
                             <Link
-                                className={path == "/calendario" ? "opacity-50" : ""}
+                                className={path == '/calendario' ? 'opacity-50' : ''}
                                 onClick={handleClick}
                                 href='/calendario'
                             >
@@ -59,18 +59,18 @@ export default function Navbar() {
                         </li>
                         <li>
                             <Link
-                                className={path == "/acerca-de" ? "opacity-50" : ""}
+                                className={path == '/acerca-de' ? 'opacity-50' : ''}
                                 onClick={handleClick}
                                 href='/acerca-de'
                             >
-                                Sobre la app
+                                Guía
                             </Link>
                         </li>
                         <li>
                             <Link
                                 className={
-                                    "font-bold underline " +
-                                    (path == "/login" ? "opacity-50" : "")
+                                    'font-bold underline ' +
+                                    (path == '/login' ? 'opacity-50' : '')
                                 }
                                 onClick={handleClick}
                                 href='/login'
@@ -88,7 +88,7 @@ export default function Navbar() {
                 <ul className='flex gap-5 text-white items-center tracking-wider uppercase'>
                     <li>
                         <Link
-                            className={path == "/" ? "text-gray-500" : "hover:text-orange"}
+                            className={path == '/' ? 'text-gray-500' : 'hover:text-orange'}
                             href='/'
                         >
                             Inicio
@@ -97,7 +97,7 @@ export default function Navbar() {
                     <li>
                         <Link
                             className={
-                                path == "/calendario" ? "text-gray-500" : "hover:text-orange"
+                                path == '/calendario' ? 'text-gray-500' : 'hover:text-orange'
                             }
                             href='/calendario'
                         >
@@ -107,11 +107,11 @@ export default function Navbar() {
                     <li>
                         <Link
                             className={
-                                path == "/acerca-de" ? "text-gray-500" : "hover:text-orange"
+                                path == '/acerca-de' ? 'text-gray-500' : 'hover:text-orange'
                             }
                             href='/acerca-de'
                         >
-                            Sobre la app
+                            Guía
                         </Link>
                     </li>
                     <li>

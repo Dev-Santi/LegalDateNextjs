@@ -19,12 +19,12 @@ export default function page() {
             </p>
             <section>
                 <h3 className='text-xl font-semibold mt-4 mb-4'>
-                    ¿Cómo utilizar la aplicación?
+                    ¿Cómo puedo calcular un plazo?
                 </h3>
                 <ol className='flex flex-col gap-8 list-decimal'>
                     <li>
                         <h2 className='text-orange font-bold'>
-                            Seleccionar el filtro correspondiente al caso:
+                            Selecciona el filtro correspondiente:
                         </h2>
                         <ul className='flex flex-col gap-4 ml-10 mt-2 list-disc'>
                             <li>
@@ -46,7 +46,7 @@ export default function page() {
                         </ul>
                     </li>
                     <li>
-                        <h2 className='text-orange font-bold'>Ingresar los datos:</h2>
+                        <h2 className='text-orange font-bold'>Ingresa los datos:</h2>
                         <ul className='flex flex-col gap-4 ml-10 mt-2 list-disc'>
                             <li>
                                 <span className='font-semibold'>Fecha de notificación: </span>
@@ -62,9 +62,7 @@ export default function page() {
                     </li>
                     <li>
                         <h2 className='text-orange font-bold'>
-                            Finalmente, volver a revisar que los datos ingresados coincidan con
-                            las particularidades de tu caso y ejecutar el programa para obtener
-                            el resultado.
+                            Pulsar el botón Calcular para obtener el resultado.
                         </h2>
                     </li>
                 </ol>

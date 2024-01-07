@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import swal from "sweetalert2";
-import { calculateDate } from "@/calendar/functions";
-import { useState } from "react";
+import swal from 'sweetalert2';
+import { calculateDate } from '@/calendar/functions';
+import { useState } from 'react';
 
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 
 export default function Calculator() {
-    const [date, setDate] = useState("");
-    const [count, setCount] = useState("15");
+    const [date, setDate] = useState('');
+    const [count, setCount] = useState('15');
     const [filters, setFilters] = useState({
         holidays: true, // Filtrar dias feriados
         weekend: true, // Filtrar Sabados y Domingos
@@ -26,7 +26,7 @@ export default function Calculator() {
             turismo: true,
         });
         setPreFilter(0);
-        setCount("15");
+        setCount('15');
     }
 
     function setCivil() {
@@ -37,20 +37,20 @@ export default function Calculator() {
             turismo: true,
         });
         setPreFilter(1);
-        setCount("30");
+        setCount('30');
     }
 
     function handleClick(e: React.MouseEvent) {
         e.preventDefault();
 
-        let filter = "Filtro seleccionado: ";
+        let filter = 'Filtro seleccionado: ';
 
         if (preFilter == 0) {
-            filter += "Derecho Laboral";
+            filter += 'Derecho Laboral';
         } else if (preFilter == 1) {
-            filter += "Derecho Civil";
+            filter += 'Derecho Civil';
         } else {
-            filter += "Personalizado";
+            filter += 'Personalizado';
         }
 
         const response = calculateDate(date, count, {
@@ -60,20 +60,20 @@ export default function Calculator() {
         swal.fire({
             title: response,
             text: filter,
-            icon: response.includes("Error") ? "warning" : undefined,
-            confirmButtonColor: "#d4a05b",
-            confirmButtonText: "Cerrar",
+            icon: response.includes('Error') ? 'warning' : undefined,
+            confirmButtonColor: '#d4a05b',
+            confirmButtonText: 'Cerrar',
         });
     }
 
-    const visibleFiltersClass = visibleFilters ? "h-fit md:h-[22rem]" : "h-14";
+    const visibleFiltersClass = visibleFilters ? 'h-fit md:h-[22rem]' : 'h-14';
 
     return (
         <>
             <form className='text-center flex flex-col gap-4 items-center py-6'>
                 <div
                     className={
-                        "transition-all duration-300 bg-gray-700 text-white w-full p-3 flex flex-col items-center overflow-hidden " +
+                        'transition-all duration-300 bg-gray-700 text-white w-full p-3 flex flex-col items-center overflow-hidden ' +
                         visibleFiltersClass
                     }
                 >
@@ -85,8 +85,8 @@ export default function Calculator() {
                         <span>{visibleFilters ? <IoIosArrowUp /> : <IoIosArrowDown />}</span>
                     </h2>
 
-                    <h3 className='my-2 text-red-400 max-w-[22rem]'>
-                        Selecciona los días en que se suspende el cómputo del plazo.
+                    <h3 className='my-2 text-left text-white max-w-[22rem]'>
+                        Selecciona cuándo debe suspenderse el cómputo del plazo.
                     </h3>
 
                     {/* Opciones predefinidas */}
@@ -95,8 +95,8 @@ export default function Calculator() {
                         <div
                             onClick={setLaboral}
                             className={
-                                "p-2 border-[2px] hover:bg-gray-600 border-gray-500 cursor-pointer " +
-                                (preFilter == 0 ? "bg-gray-500 hover:bg-gray-500" : "")
+                                'p-2 border-[2px] hover:bg-gray-600 border-gray-500 cursor-pointer ' +
+                                (preFilter == 0 ? 'bg-gray-500 hover:bg-gray-500' : '')
                             }
                         >
                             Derecho Laboral
@@ -104,16 +104,16 @@ export default function Calculator() {
                         <div
                             onClick={setCivil}
                             className={
-                                "p-2 border-[2px] hover:bg-gray-600 border-gray-500 cursor-pointer " +
-                                (preFilter == 1 ? "bg-gray-500 hover:bg-gray-500" : "")
+                                'p-2 border-[2px] hover:bg-gray-600 border-gray-500 cursor-pointer ' +
+                                (preFilter == 1 ? 'bg-gray-500 hover:bg-gray-500' : '')
                             }
                         >
                             Derecho Civil
                         </div>
                         <div
                             className={
-                                "p-2 border-[2px] border-gray-500 opacity-25 " +
-                                (preFilter == 2 ? "bg-gray-500 opacity-[100%]" : "")
+                                'p-2 border-[2px] border-gray-500 opacity-25 ' +
+                                (preFilter == 2 ? 'bg-gray-500 opacity-[100%]' : '')
                             }
                         >
                             Personalizado
@@ -139,7 +139,7 @@ export default function Calculator() {
 
                     <div className='flex justify-between items-center w-full mt-4'>
                         <label
-                            className={filters.holidays ? "text-gray-500" : ""}
+                            className={filters.holidays ? 'text-gray-500' : ''}
                             htmlFor='turismoCheck'
                         >
                             Durante semana de turismo
