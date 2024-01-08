@@ -1,13 +1,51 @@
-import Link from "next/link";
-import { ImEnter } from "react-icons/im";
+'use client';
 
-import { MdPersonPin, MdPerson } from "react-icons/md";
-import { GiPadlock } from "react-icons/gi";
+import Link from 'next/link';
+import { ImEnter } from 'react-icons/im';
+import { MdPersonPin, MdPerson } from 'react-icons/md';
+import { GiPadlock } from 'react-icons/gi';
+
+import { FormEvent, useState } from 'react';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import Swal from 'sweetalert2';
 
 export default function () {
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
+    const router = useRouter();
+
+    async function handleSubmit(e: FormEvent) {
+        e.preventDefault();
+
+        try {
+            const sigInResponse = await signIn('credentials', {
+                email: email,
+                password: pass,
+                redirect: false,
+            });
+
+            console.log(sigInResponse);
+
+            if (sigInResponse && !sigInResponse.ok) {
+                Swal.fire({
+                    title: 'Credenciales inválidas',
+                    confirmButtonColor: 'red',
+                });
+            } else {
+                router.push('/calendario');
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     return (
         <main className='flex items-center justify-center min-h-[calc(100vh-10rem)]'>
-            <form className='mt-10 relative flex flex-col items-center gap-4 bg-[#ffffff10] shadow-xl backdrop-blur-md p-10 rounded-xl '>
+            <form
+                onSubmit={handleSubmit}
+                className='mt-10 relative flex flex-col items-center gap-4 bg-[#ffffff10] shadow-xl backdrop-blur-md p-10 rounded-xl '
+            >
                 <ImEnter className='text-[4rem] text-white absolute top-[-1rem]' />
 
                 <div className='mt-10 flex items-center h-full bg-orange'>
@@ -18,6 +56,8 @@ export default function () {
                         <MdPerson />
                     </label>
                     <input
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         type='email'
                         id='email'
                         required
@@ -34,6 +74,8 @@ export default function () {
                         <GiPadlock />
                     </label>
                     <input
+                        value={pass}
+                        onChange={(e) => setPass(e.target.value)}
                         id='pass'
                         type='password'
                         required
@@ -50,7 +92,7 @@ export default function () {
                         ¿No tienes cuenta?
                     </p>
                     <Link
-                        href={"/signup"}
+                        href={'/signup'}
                         className='text-white text-center shadow-md py-1 bg-gray-700 w-full hover:bg-orange'
                     >
                         Registrarse
