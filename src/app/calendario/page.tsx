@@ -1,42 +1,41 @@
-"use client";
+'use client';
 
-import calendar from "@/calendar/calendar";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import Swal from "sweetalert2";
-import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
+import calendar from '@/calendar/calendar';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import Swal from 'sweetalert2';
+import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 
 export default function page() {
     const { data: session, status } = useSession();
-    console.log(session);
 
     const [currentMonth, setCurrentMonth] = useState(calendar.years[1].months[0]);
 
     useEffect(() => {
         try {
-            const localStorageCurrentMonth = localStorage.getItem("currentMonth");
+            const localStorageCurrentMonth = localStorage.getItem('currentMonth');
 
             if (localStorageCurrentMonth) {
                 setCurrentMonth(JSON.parse(localStorageCurrentMonth));
             }
         } catch (e) {
-            console.log("Error obteniendo último mes visualizado en el local storage");
+            console.log('Error obteniendo último mes visualizado en el local storage');
         }
     }, []);
 
-    const currentYear = currentMonth.days[0].date.split("-")[0];
+    const currentYear = currentMonth.days[0].date.split('-')[0];
     const firstDayOfCurrentMonth = currentMonth.days[0];
 
     function alocateEmptyDivsUntilFirstDay(day: any) {
         const emptyDays: any = [];
         const names = [
-            "Lunes",
-            "Martes",
-            "Miercoles",
-            "Jueves",
-            "Viernes",
-            "Sabado",
-            "Domingo",
+            'Lunes',
+            'Martes',
+            'Miercoles',
+            'Jueves',
+            'Viernes',
+            'Sabado',
+            'Domingo',
         ];
 
         for (let i = 0; i < 7; i++) {
@@ -55,7 +54,7 @@ export default function page() {
 
     function changeYear(nextOrPrevious: 1 | -1) {
         const nextYearNumber = (
-            parseInt(currentMonth.days[0].date.split("-")[0]) + nextOrPrevious
+            parseInt(currentMonth.days[0].date.split('-')[0]) + nextOrPrevious
         ).toString();
 
         const newYear = calendar.years.find((year) => {
@@ -73,10 +72,10 @@ export default function page() {
 
         if (newCurrentMonth) {
             try {
-                localStorage.setItem("currentMonth", JSON.stringify(newCurrentMonth));
+                localStorage.setItem('currentMonth', JSON.stringify(newCurrentMonth));
             } catch (e) {
                 console.log(
-                    "Error al intentar guardar último mes visualizado en el local storage"
+                    'Error al intentar guardar último mes visualizado en el local storage'
                 );
             }
             setCurrentMonth(newCurrentMonth);
@@ -103,12 +102,12 @@ export default function page() {
         ) {
             try {
                 localStorage.setItem(
-                    "currentMonth",
+                    'currentMonth',
                     JSON.stringify(year.months[currentMonthIndex + nextOrPrevious])
                 );
             } catch (e) {
                 console.log(
-                    "Error al intentar guardar último mes visualizado en el local storage"
+                    'Error al intentar guardar último mes visualizado en el local storage'
                 );
             }
             setCurrentMonth(year.months[currentMonthIndex + nextOrPrevious]);
@@ -120,12 +119,12 @@ export default function page() {
         ) {
             try {
                 localStorage.setItem(
-                    "currentMonth",
+                    'currentMonth',
                     JSON.stringify(year.months[currentMonthIndex + nextOrPrevious])
                 );
             } catch (e) {
                 console.log(
-                    "Error al intentar guardar último mes visualizado en el local storage"
+                    'Error al intentar guardar último mes visualizado en el local storage'
                 );
             }
             setCurrentMonth(year.months[currentMonthIndex + nextOrPrevious]);
@@ -158,8 +157,8 @@ export default function page() {
                         <h2
                             onClick={() =>
                                 Swal.fire({
-                                    title: "Descripción del feriado",
-                                    confirmButtonColor: "#f87171",
+                                    title: 'Descripción del feriado',
+                                    confirmButtonColor: '#f87171',
                                 })
                             }
                             className='text-red-400 w-16 cursor-pointer hover:text-red-200'
@@ -257,23 +256,23 @@ export default function page() {
                                 <span
                                     className={
                                         day.isJudicialVacation
-                                            ? "text-orange"
-                                            : ["Sabado", "Domingo"].includes(day.name)
-                                            ? "text-gray-400"
-                                            : ""
+                                            ? 'text-orange'
+                                            : ['Sabado', 'Domingo'].includes(day.name)
+                                            ? 'text-gray-400'
+                                            : ''
                                     }
                                 >
-                                    {day.date.split("-")[2]}
+                                    {day.date.split('-')[2]}
                                 </span>
 
                                 {/* Feriados */}
                                 {day.holiday && (
                                     <span
                                         onClick={() =>
-                                            typeof day.holiday == "object" &&
+                                            typeof day.holiday == 'object' &&
                                             Swal.fire({
                                                 title: day.holiday.description,
-                                                confirmButtonColor: "#f87171",
+                                                confirmButtonColor: '#f87171',
                                             })
                                         }
                                         className='hover:text-red-200 cursor-pointer absolute mt-10 text-red-400 text-[0.75rem]'

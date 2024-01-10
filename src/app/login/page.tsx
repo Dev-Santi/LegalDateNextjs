@@ -25,15 +25,13 @@ export default function () {
                 redirect: false,
             });
 
-            console.log(sigInResponse);
-
             if (sigInResponse && !sigInResponse.ok) {
                 Swal.fire({
                     title: 'Credenciales inválidas',
                     confirmButtonColor: 'red',
                 });
             } else {
-                router.push('/calendario');
+                router.push('/');
             }
         } catch (e) {
             console.log(e);
