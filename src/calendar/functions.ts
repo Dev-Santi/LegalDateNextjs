@@ -7,7 +7,7 @@ type filters = {
     judicialVacation: boolean;
 };
 
-type day = {
+export type day = {
     date: string;
     name: string;
     holiday: any;

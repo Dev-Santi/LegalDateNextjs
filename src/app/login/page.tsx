@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { ImEnter } from 'react-icons/im';
-import { MdPersonPin, MdPerson } from 'react-icons/md';
+import { MdPerson } from 'react-icons/md';
 import { GiPadlock } from 'react-icons/gi';
 
 import { FormEvent, useState } from 'react';

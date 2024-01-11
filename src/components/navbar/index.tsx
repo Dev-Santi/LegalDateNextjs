@@ -8,7 +8,6 @@ import { RxHamburgerMenu } from 'react-icons/rx';
 import { VscClose } from 'react-icons/vsc';
 import { IoPersonCircleOutline } from 'react-icons/io5';
 import { useSession } from 'next-auth/react';
-import { log } from 'util';
 
 export default function Navbar() {
     const [isMenuActive, setIsMenuActive] = useState(false);
