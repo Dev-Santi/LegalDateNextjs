@@ -4,6 +4,7 @@ import { type day } from '@/calendar/functions';
 import calendar from '@/calendar/calendar';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import Swal from 'sweetalert2';
+import axios, { AxiosError } from 'axios';
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 
@@ -11,7 +12,18 @@ export default function page() {
     const { data: session } = useSession();
     const [currentMonth, setCurrentMonth] = useState(calendar.years[1].months[0]);
     const currentYear = currentMonth.days[0].date.split('-')[0];
-    //Obtener el id del usuario actual //console.log(session?.user?._id);
+
+    //Funcion para agregar una fecha al calendario del usuario
+    async function addDate(date: string) {
+        try {
+            const addDateResponse = await axios.put('/api/saveDate', {
+                user: session?.user,
+                date: date,
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
     //Obtener el último mes visto anteriormente, guardado en Local storage.
     useEffect(() => {
@@ -160,7 +172,7 @@ export default function page() {
                     {alocateEmptyDivsUntilFirstDay(currentMonth.days[0])}
                     {currentMonth.days.map((day) => {
                         //Por cada dia retorna la celda correspondiente
-                        return <Cell key={day.date} day={day} />;
+                        return <Cell key={day.date} day={day} session={session} />;
                     })}
                 </div>
             </div>
@@ -192,7 +204,16 @@ function CellHeaders() {
     );
 }
 
-function Cell({ day }: { day: day }) {
+function Cell({ day, session }: { day: day; session?: any }) {
+    function getSavedDates() {
+        return session.user.savedDates;
+    }
+
+    let savedDates;
+    if (session) {
+        savedDates = getSavedDates();
+    }
+
     return (
         <div
             key={day.date}
@@ -210,6 +231,8 @@ function Cell({ day }: { day: day }) {
             >
                 {day.date.split('-')[2]}
             </span>
+
+            <span>{savedDates ? (savedDates.includes(day.date) ? 'a' : '') : ''}</span>
 
             {/* Si es feriado: */}
             {day.holiday && (

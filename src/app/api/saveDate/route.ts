@@ -1,16 +1,25 @@
 import { NextResponse } from 'next/server';
-import User from '@/models/user';
 import { connectDB } from '@/libs/mongoose';
+import User from '@/models/user';
 
-export async function GET(req: any) {
+export async function PUT(req: Request) {
     try {
         await connectDB();
+        const data = await req.json();
 
-        const user = req.body;
+        const user = data.user;
+        const date = data.date;
+        const userFound: any = await User.findById(user._id);
 
-        return NextResponse.json(user);
+        userFound.savedDates.push(date);
+
+        const updateResponse = await User.findOneAndUpdate({ _id: user._id }, userFound);
+        return NextResponse.json(updateResponse);
     } catch (e) {
         console.log(e);
-        return NextResponse.json({ status: 400 });
+        return NextResponse.json(
+            { message: 'Error, posiblemente usuario no logueado' },
+            { status: 400 }
+        );
     }
 }
