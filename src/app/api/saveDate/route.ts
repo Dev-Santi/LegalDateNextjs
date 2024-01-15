@@ -1,3 +1,5 @@
+export const fetchCache = 'force-no-store';
+
 import { NextResponse } from 'next/server';
 import { connectDB } from '@/libs/mongoose';
 import User from '@/models/user';

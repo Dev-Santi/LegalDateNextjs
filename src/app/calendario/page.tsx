@@ -4,14 +4,24 @@ import { type day } from '@/calendar/functions';
 import calendar from '@/calendar/calendar';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import Swal from 'sweetalert2';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
+import { parse } from 'path';
 
 export default function page() {
-    const { data: session } = useSession();
+    const { data: session }: any = useSession();
     const [currentMonth, setCurrentMonth] = useState(calendar.years[1].months[0]);
     const currentYear = currentMonth.days[0].date.split('-')[0];
+
+    let savedDates: Array<string>;
+    try {
+        if (session) {
+            savedDates = session.user.savedDates;
+        }
+    } catch (e) {
+        console.log(e);
+    }
 
     //Funcion para agregar una fecha al calendario del usuario
     async function addDate(date: string) {
@@ -172,7 +182,7 @@ export default function page() {
                     {alocateEmptyDivsUntilFirstDay(currentMonth.days[0])}
                     {currentMonth.days.map((day) => {
                         //Por cada dia retorna la celda correspondiente
-                        return <Cell key={day.date} day={day} session={session} />;
+                        return <Cell key={day.date} day={day} savedDates={savedDates} />;
                     })}
                 </div>
             </div>
@@ -204,14 +214,20 @@ function CellHeaders() {
     );
 }
 
-function Cell({ day, session }: { day: day; session?: any }) {
-    function getSavedDates() {
-        return session.user.savedDates;
-    }
+function Cell({ day, savedDates }: { day: day; savedDates: any }) {
+    let parseSavedDates = [...savedDates];
 
-    let savedDates;
-    if (session) {
-        savedDates = getSavedDates();
+    function Prueba() {
+        if (parseSavedDates) {
+            console.log(parseSavedDates.includes(day.date));
+            return (
+                <span className='w-6 h-6 block text-white'>
+                    {parseSavedDates.includes(day.date) ? 'A' : ''}
+                </span>
+            );
+        } else {
+            return null;
+        }
     }
 
     return (
@@ -230,9 +246,8 @@ function Cell({ day, session }: { day: day; session?: any }) {
                 }
             >
                 {day.date.split('-')[2]}
+                <Prueba />
             </span>
-
-            <span>{savedDates ? (savedDates.includes(day.date) ? 'a' : '') : ''}</span>
 
             {/* Si es feriado: */}
             {day.holiday && (
