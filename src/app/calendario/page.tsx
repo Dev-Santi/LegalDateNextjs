@@ -12,13 +12,15 @@ export default function page() {
     const { data: session }: any = useSession();
     const [currentMonth, setCurrentMonth] = useState(calendar.years[1].months[0]);
     const currentYear = currentMonth.days[0].date.split('-')[0];
+    const [savedDates, setSavedDates] = useState(null);
 
-    let savedDates: Array<any>;
     async function getSavedDates() {
         try {
-            if (session) {
-                savedDates = (await axios.get('/api/dates/' + session.user.dates._id)).data
-                    .savedDates;
+            if (session && !savedDates) {
+                const dates = await (
+                    await axios.get('/api/dates/' + session.user.dates._id)
+                ).data.dates;
+                setSavedDates(dates);
             }
         } catch (e) {
             console.log(e);
@@ -26,21 +28,21 @@ export default function page() {
     }
     getSavedDates();
 
-    //Funcion para agregar una fecha al calendario del usuario
-    async function addDate() {
-        try {
-            await axios.post('/api/dates', {
-                user: session?.user,
-                date: {
-                    date: '2024-5-12',
-                    description: 'Descripcion',
-                    alert: true,
-                },
-            });
-        } catch (e) {
-            console.log(e);
-        }
-    }
+    // Funcion para agregar una fecha al calendario del usuario
+    // async function addDate() {
+    //     try {
+    //         await axios.post('/api/dates', {
+    //             user: session?.user,
+    //             date: {
+    //                 date: '2024-11-22',
+    //                 description: 'Nueva descripcion',
+    //                 alert: true,
+    //             },
+    //         });
+    //     } catch (e) {
+    //         console.log(e);
+    //     }
+    // }
 
     //Obtener el último mes visto anteriormente, guardado en Local storage.
     useEffect(() => {
@@ -189,12 +191,12 @@ export default function page() {
                     {alocateEmptyDivsUntilFirstDay(currentMonth.days[0])}
                     {currentMonth.days.map((day) => {
                         //Por cada dia retorna la celda correspondiente
-                        return <Cell key={day.date} day={day} />;
+                        return <Cell key={day.date} day={day} savedDates={savedDates} />;
                     })}
                 </div>
             </div>
             <Legend />
-            <button onClick={addDate}>add</button>
+            {/* <button onClick={addDate}>add</button> */}
         </main>
     );
 }
@@ -222,11 +224,34 @@ function CellHeaders() {
     );
 }
 
-function Cell({ day }: { day: day }) {
+function Cell({ day, savedDates }: { day: day; savedDates: Array<any> | null }) {
+    let isSaved = false;
+    let description = '';
+    savedDates?.forEach((e) => {
+        if (e.date == day.date) {
+            description = e.description;
+            isSaved = true;
+        }
+    });
+
+    function handleClickIfSaved() {
+        if (isSaved) {
+            Swal.fire({
+                title: description,
+            });
+        }
+    }
+
+    let className = isSaved ? 'bg-green-900 cursor-pointer' : 'bg-gray-900';
+
     return (
         <div
+            onClick={handleClickIfSaved}
             key={day.date}
-            className='bg-gray-900 relative text-xl flex flex-col items-center justify-center h-[3.2rem] md:h-[5rem]'
+            className={
+                'relative text-xl flex flex-col items-center justify-center h-[3.2rem] md:h-[5rem] ' +
+                className
+            }
         >
             {/* Numero del día y color especial si es feria judicial */}
             <span
@@ -266,10 +291,17 @@ function Legend() {
             <h2 className='text-center mt-2'>Referencias</h2>
             <div className='flex items-center gap-5 px-6 py-3'>
                 <h2 className='flex justify-center w-16'>
-                    <div className='bg-orange p-2 w-fit rounded-full'></div>
+                    <div className='text-orange bg-gray-800 p-2 px-3 w-fit'>14</div>
                 </h2>
                 <FaArrowRight className='text-sm' />
                 <h2>Feria Judicial</h2>
+            </div>
+            <div className='flex items-center gap-5 px-6 py-3'>
+                <h2 className='flex justify-center w-16'>
+                    <div className='text-gray-100 bg-green-900 p-2 px-3 w-fit'>14</div>
+                </h2>
+                <FaArrowRight className='text-sm' />
+                <h2>Fecha guardada</h2>
             </div>
         </div>
     );

@@ -8,7 +8,7 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 
         const dates = await Dates.findById(params.id);
 
-        return NextResponse.json({ savedDates: dates.savedDates });
+        return NextResponse.json({ dates: dates.savedDates });
     } catch (e) {
         return NextResponse.json(
             { message: 'Error, posiblemente usuario no logueado' },
