@@ -1,9 +1,8 @@
-export const fetchCache = 'force-no-store';
-
-import { NextResponse } from 'next/server';
-import User from '@/models/user';
-import bcrypt from 'bcrypt';
-import { connectDB } from '@/libs/mongoose';
+import { NextResponse } from "next/server";
+import { connectDB } from "@/libs/mongoose";
+import bcrypt from "bcrypt";
+import User from "@/models/user";
+import Dates from "@/models/dates";
 
 export async function POST(req: Request) {
     try {
@@ -12,7 +11,10 @@ export async function POST(req: Request) {
         await connectDB();
         const userFound = await User.findOne({ email: email });
         if (userFound) {
-            return NextResponse.json({ message: 'Usuario ya existe' }, { status: 400 });
+            return NextResponse.json(
+                { message: "Usuario ya existe" },
+                { status: 400 }
+            );
         }
 
         if (password.length >= 6) {
@@ -22,12 +24,13 @@ export async function POST(req: Request) {
                 name,
                 password: hashedPass,
             });
+            user.dates = await Dates.create({});
 
             const newUser = await user.save();
             return NextResponse.json({ message: newUser });
         } else {
             return NextResponse.json(
-                { message: 'Contraseña demasiado corta' },
+                { message: "Contraseña demasiado corta" },
                 { status: 400 }
             );
         }

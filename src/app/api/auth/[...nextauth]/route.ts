@@ -1,27 +1,25 @@
-export const fetchCache = 'force-no-store';
-
-import NextAuth from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import { connectDB } from '@/libs/mongoose';
-import User from '@/models/user';
-import bcrypt from 'bcrypt';
+import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { connectDB } from "@/libs/mongoose";
+import User from "@/models/user";
+import bcrypt from "bcrypt";
 
 const handler = NextAuth({
     providers: [
         CredentialsProvider({
-            name: 'Credentials',
+            name: "Credentials",
             credentials: {
-                email: { label: 'Email', type: 'text' },
-                password: { label: 'Contraseña', type: 'text' },
+                email: { label: "Email", type: "text" },
+                password: { label: "Contraseña", type: "text" },
             },
             async authorize(credentials, req) {
                 try {
                     await connectDB();
 
-                    const userFound = await User.findOne({ email: credentials?.email }).select(
-                        '+password'
-                    );
-                    if (!userFound) throw new Error('Crendenciales inválidas');
+                    const userFound = await User.findOne({
+                        email: credentials?.email,
+                    }).select("+password");
+                    if (!userFound) throw new Error("Crendenciales inválidas");
 
                     let matchPass;
                     if (credentials?.password) {
@@ -31,7 +29,7 @@ const handler = NextAuth({
                         );
                     }
 
-                    if (!matchPass) throw new Error('Crendenciales inválidas');
+                    if (!matchPass) throw new Error("Crendenciales inválidas");
 
                     return userFound;
                 } catch (e) {
@@ -50,7 +48,7 @@ const handler = NextAuth({
         session({ session, token }: { session: any; token: any }) {
             try {
                 if (token.user) session.user = token.user;
-                session.user.password = '';
+                session.user.password = "";
 
                 return session;
             } catch (e) {
@@ -60,7 +58,7 @@ const handler = NextAuth({
         },
     },
     pages: {
-        signIn: '/login',
+        signIn: "/login",
     },
 });
 
