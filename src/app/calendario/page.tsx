@@ -242,7 +242,7 @@ function Cell({ day, savedDates }: { day: day; savedDates: Array<any> | null }) 
         }
     }
 
-    let className = isSaved ? 'bg-green-900 cursor-pointer' : 'bg-gray-900';
+    let className = isSaved ? 'bg-[#7066E0] rounded-md cursor-pointer' : 'bg-gray-900';
 
     return (
         <div
@@ -291,14 +291,14 @@ function Legend() {
             <h2 className='text-center mt-2'>Referencias</h2>
             <div className='flex items-center gap-5 px-6 py-3'>
                 <h2 className='flex justify-center w-16'>
-                    <div className='text-orange bg-gray-800 p-2 px-3 w-fit'>14</div>
+                    <div className='text-orange bg-gray-800 p-2 px-3 w-fit'>15</div>
                 </h2>
                 <FaArrowRight className='text-sm' />
                 <h2>Feria Judicial</h2>
             </div>
             <div className='flex items-center gap-5 px-6 py-3'>
                 <h2 className='flex justify-center w-16'>
-                    <div className='text-gray-100 bg-green-900 p-2 px-3 w-fit'>14</div>
+                    <div className='text-gray-100 bg-[#7066E0] p-2 px-3 w-fit'>15</div>
                 </h2>
                 <FaArrowRight className='text-sm' />
                 <h2>Fecha guardada</h2>

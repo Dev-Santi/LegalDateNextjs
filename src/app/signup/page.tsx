@@ -31,6 +31,8 @@ export default function page() {
             if (signUpResponse.status === 200) {
                 await Swal.fire({
                     title: '¡Registro exitoso!',
+                    icon: 'success',
+                    confirmButtonText: 'Entrar',
                     confirmButtonColor: 'green',
                 });
 
