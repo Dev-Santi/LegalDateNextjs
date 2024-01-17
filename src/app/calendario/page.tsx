@@ -287,7 +287,7 @@ function Cell({ day, savedDates }: { day: day; savedDates: Array<any> | null }) 
 
 function Legend() {
     return (
-        <div className='bg-gray-900 hidden md:flex relative text-base md:text-xl flex-col rounded-xl rounded-t-none'>
+        <div className='bg-gray-900 absolute hidden xl:flex left-0 bottom-[45%] text-base md:text-xl flex-col rounded-xl rounded-l-none'>
             <h2 className='text-center mt-2'>Referencias</h2>
             <div className='flex items-center gap-5 px-6 py-3'>
                 <h2 className='flex justify-center w-16'>
