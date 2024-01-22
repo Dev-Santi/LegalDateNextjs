@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
-import { connectDB } from "@/libs/mongoose";
-import Dates from "@/models/dates";
+import { NextResponse } from 'next/server';
+import { connectDB } from '@/libs/mongoose';
+import Dates from '@/models/dates';
 
 export async function POST(req: Request) {
     try {
@@ -20,7 +20,7 @@ export async function POST(req: Request) {
     } catch (e) {
         console.log(e);
         return NextResponse.json(
-            { message: "Error, posiblemente usuario no logueado" },
+            { message: 'Error, posiblemente usuario no logueado' },
             { status: 400 }
         );
     }

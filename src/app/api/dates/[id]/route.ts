@@ -2,7 +2,37 @@ import { connectDB } from '@/libs/mongoose';
 import { NextResponse } from 'next/server';
 import Dates from '@/models/dates';
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+type params = {
+    params: { id: string };
+};
+
+export async function DELETE(req: Request, { params }: params) {
+    try {
+        await connectDB();
+
+        const dates = await Dates.findOne({
+            'savedDates.date': params.id,
+        });
+
+        const indexOfDateToDelete = dates.savedDates.findIndex((d: any) => {
+            return d.date == params.id;
+        });
+
+        dates.savedDates.splice(indexOfDateToDelete, 1);
+
+        await Dates.findByIdAndUpdate(dates._id, dates);
+
+        return NextResponse.json({
+            savedDates: dates.savedDates,
+            params: params.id,
+        });
+    } catch (e) {
+        console.log(e);
+        return NextResponse.json({ status: 400 });
+    }
+}
+
+export async function GET(req: Request, { params }: params) {
     try {
         await connectDB();
 

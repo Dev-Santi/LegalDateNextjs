@@ -1,26 +1,28 @@
-"use client";
+'use client';
 
-import { type day } from "@/calendar/functions";
-import calendar from "@/calendar/calendar";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import Swal from "sweetalert2";
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { type day } from '@/calendar/functions';
+import calendar from '@/calendar/calendar';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import Swal from 'sweetalert2';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 
 export default function page() {
     const { data: session }: any = useSession();
     const [currentMonth, setCurrentMonth] = useState(
         calendar.years[1].months[0]
     );
-    const currentYear = currentMonth.days[0].date.split("-")[0];
+    const currentYear = currentMonth.days[0].date.split('-')[0];
     const [savedDates, setSavedDates] = useState(null);
+
+    console.log(savedDates);
 
     async function getSavedDates() {
         try {
             if (session && !savedDates) {
                 const dates = await (
-                    await axios.get("/api/dates/" + session.user.dates._id)
+                    await axios.get('/api/dates/' + session.user.dates._id)
                 ).data.dates;
                 setSavedDates(dates);
             }
@@ -34,21 +36,21 @@ export default function page() {
     useEffect(() => {
         try {
             const localStorageCurrentMonth =
-                localStorage.getItem("currentMonth");
+                localStorage.getItem('currentMonth');
 
             if (localStorageCurrentMonth) {
                 setCurrentMonth(JSON.parse(localStorageCurrentMonth));
             }
         } catch (e) {
             console.log(
-                "Error obteniendo último mes visualizado en el local storage"
+                'Error obteniendo último mes visualizado en el local storage'
             );
         }
     }, []);
 
     function handleChangeYear(nextOrPrevious: 1 | -1) {
         const nextYearNumber = (
-            parseInt(currentMonth.days[0].date.split("-")[0]) + nextOrPrevious
+            parseInt(currentMonth.days[0].date.split('-')[0]) + nextOrPrevious
         ).toString();
 
         const newYear = calendar.years.find((year) => {
@@ -67,12 +69,12 @@ export default function page() {
         if (newCurrentMonth) {
             try {
                 localStorage.setItem(
-                    "currentMonth",
+                    'currentMonth',
                     JSON.stringify(newCurrentMonth)
                 );
             } catch (e) {
                 console.log(
-                    "Error al intentar guardar último mes visualizado en el local storage"
+                    'Error al intentar guardar último mes visualizado en el local storage'
                 );
             }
             setCurrentMonth(newCurrentMonth);
@@ -99,14 +101,14 @@ export default function page() {
         ) {
             try {
                 localStorage.setItem(
-                    "currentMonth",
+                    'currentMonth',
                     JSON.stringify(
                         year.months[currentMonthIndex + nextOrPrevious]
                     )
                 );
             } catch (e) {
                 console.log(
-                    "Error al intentar guardar último mes visualizado en el local storage"
+                    'Error al intentar guardar último mes visualizado en el local storage'
                 );
             }
             setCurrentMonth(year.months[currentMonthIndex + nextOrPrevious]);
@@ -118,14 +120,14 @@ export default function page() {
         ) {
             try {
                 localStorage.setItem(
-                    "currentMonth",
+                    'currentMonth',
                     JSON.stringify(
                         year.months[currentMonthIndex + nextOrPrevious]
                     )
                 );
             } catch (e) {
                 console.log(
-                    "Error al intentar guardar último mes visualizado en el local storage"
+                    'Error al intentar guardar último mes visualizado en el local storage'
                 );
             }
             setCurrentMonth(year.months[currentMonthIndex + nextOrPrevious]);
@@ -133,56 +135,56 @@ export default function page() {
     }
 
     return (
-        <main className="flex mt-12 md:mt-24 justify-center items-center flex-col text-white">
-            <div className="min-w-[21rem] w-full scale-90 md:scale-100 md:w-[45rem] h-fit bg-gray-900 shadow-xl rounded-xl overflow-hidden pb-2">
+        <main className='flex mt-12 md:mt-24 justify-center items-center flex-col text-white'>
+            <div className='min-w-[21rem] w-full scale-90 md:scale-100 md:w-[45rem] h-fit bg-gray-900 shadow-xl rounded-xl overflow-hidden pb-2'>
                 {/* Año */}
-                <div className="flex">
+                <div className='flex'>
                     <button
                         onClick={() => {
                             handleChangeYear(-1);
                         }}
-                        className="px-5 hover:text-orange"
+                        className='px-5 hover:text-orange'
                     >
                         <FaArrowLeft />
                     </button>
-                    <h2 className="bg-gray-700 w-full py-2 text-center text-3xl border-b-2 border-gray-500">
+                    <h2 className='bg-gray-700 w-full py-2 text-center text-3xl border-b-2 border-gray-500'>
                         {currentYear}
                     </h2>
                     <button
                         onClick={() => {
                             handleChangeYear(1);
                         }}
-                        className="px-5 hover:text-orange"
+                        className='px-5 hover:text-orange'
                     >
                         <FaArrowRight />
                     </button>
                 </div>
 
                 {/* Mes */}
-                <div className="flex">
+                <div className='flex'>
                     <button
                         onClick={() => {
                             handleChangeMonth(-1);
                         }}
-                        className="px-5 hover:text-orange"
+                        className='px-5 hover:text-orange'
                     >
                         <FaArrowLeft />
                     </button>
-                    <h2 className="bg-gray-700 w-full py-2 text-center text-3xl border-b-2 border-gray-500">
+                    <h2 className='bg-gray-700 w-full py-2 text-center text-3xl border-b-2 border-gray-500'>
                         {currentMonth.monthName}
                     </h2>
                     <button
                         onClick={() => {
                             handleChangeMonth(1);
                         }}
-                        className="px-5 hover:text-orange"
+                        className='px-5 hover:text-orange'
                     >
                         <FaArrowRight />
                     </button>
                 </div>
 
                 {/* Casillas */}
-                <div className="grid text-center grid-cols-7">
+                <div className='grid text-center grid-cols-7'>
                     <CellHeaders />
                     {alocateEmptyDivsUntilFirstDay(currentMonth.days[0])}
                     {currentMonth.days.map((day) => {
@@ -192,13 +194,13 @@ export default function page() {
                                 key={day.date}
                                 day={day}
                                 savedDates={savedDates}
+                                setSavedDates={setSavedDates}
                             />
                         );
                     })}
                 </div>
             </div>
             <Legend />
-            {/* <button onClick={addDate}>add</button> */}
         </main>
     );
 }
@@ -207,35 +209,35 @@ function CellHeaders() {
     return (
         <>
             {/* Desktop */}
-            <span className="hidden md:block text-sm md:text-base py-3">
+            <span className='hidden md:block text-sm md:text-base py-3'>
                 Lunes
             </span>
-            <span className="hidden md:block text-sm md:text-base py-3">
+            <span className='hidden md:block text-sm md:text-base py-3'>
                 Martes
             </span>
-            <span className="hidden md:block text-sm md:text-base py-3">
+            <span className='hidden md:block text-sm md:text-base py-3'>
                 Miércoles
             </span>
-            <span className="hidden md:block text-sm md:text-base py-3">
+            <span className='hidden md:block text-sm md:text-base py-3'>
                 Jueves
             </span>
-            <span className="hidden md:block text-sm md:text-base py-3">
+            <span className='hidden md:block text-sm md:text-base py-3'>
                 Viernes
             </span>
-            <span className="hidden md:block text-sm md:text-base py-3">
+            <span className='hidden md:block text-sm md:text-base py-3'>
                 Sábado
             </span>
-            <span className="hidden md:block text-sm md:text-base py-3">
+            <span className='hidden md:block text-sm md:text-base py-3'>
                 Domingo
             </span>
             {/* Mobile */}
-            <span className="md:hidden text-sm md:text-base py-2">Lun</span>
-            <span className="md:hidden text-sm md:text-base py-2">Mar</span>
-            <span className="md:hidden text-sm md:text-base py-2">Mie</span>
-            <span className="md:hidden text-sm md:text-base py-2">Jue</span>
-            <span className="md:hidden text-sm md:text-base py-2">Vie</span>
-            <span className="md:hidden text-sm md:text-base py-2">Sáb</span>
-            <span className="md:hidden text-sm md:text-base py-2">Dom</span>
+            <span className='md:hidden text-sm md:text-base py-2'>Lun</span>
+            <span className='md:hidden text-sm md:text-base py-2'>Mar</span>
+            <span className='md:hidden text-sm md:text-base py-2'>Mie</span>
+            <span className='md:hidden text-sm md:text-base py-2'>Jue</span>
+            <span className='md:hidden text-sm md:text-base py-2'>Vie</span>
+            <span className='md:hidden text-sm md:text-base py-2'>Sáb</span>
+            <span className='md:hidden text-sm md:text-base py-2'>Dom</span>
         </>
     );
 }
@@ -243,12 +245,14 @@ function CellHeaders() {
 function Cell({
     day,
     savedDates,
+    setSavedDates,
 }: {
     day: day;
     savedDates: Array<any> | null;
+    setSavedDates: Function;
 }) {
     let isSaved = false;
-    let description = "";
+    let description = '';
     savedDates?.forEach((e) => {
         if (e.date == day.date) {
             description = e.description;
@@ -256,79 +260,97 @@ function Cell({
         }
     });
 
-    function handleClickIfSaved() {
+    async function handleClickIfSaved() {
         if (isSaved) {
-            Swal.fire({
+            const swalResponse = await Swal.fire({
                 title: description,
+                showCancelButton: true,
+                confirmButtonText: 'Cerrar',
+                cancelButtonColor: 'red',
+                cancelButtonText: 'Eliminar',
             });
+
+            //Si el usuario presional el boton de eliminar, el cual es interpretado como boton de cancelar
+            if (swalResponse.isDismissed) {
+                try {
+                    const response = await axios.delete(
+                        '/api/dates/' + day.date
+                    );
+                    setSavedDates(response.data.savedDates);
+                } catch (e) {
+                    console.log(e);
+                }
+            }
         }
     }
 
     let className = isSaved
-        ? "bg-[#7066E0] rounded-md cursor-pointer"
-        : "bg-gray-900";
+        ? 'bg-[#7066E0] hover:bg-[#918ADD] rounded-md cursor-pointer'
+        : 'bg-gray-900';
 
     return (
-        <div
-            onClick={handleClickIfSaved}
-            key={day.date}
-            className={
-                "relative text-xl flex flex-col items-center justify-center h-[3.2rem] md:h-[5rem] " +
-                className
-            }
-        >
-            {/* Numero del día y color especial si es feria judicial */}
-            <span
+        <div className='p-1'>
+            <div
+                onClick={handleClickIfSaved}
+                key={day.date}
                 className={
-                    day.isJudicialVacation
-                        ? "text-orange"
-                        : ["Sabado", "Domingo"].includes(day.name)
-                        ? "text-gray-400"
-                        : ""
+                    'relative text-xl flex flex-col items-center justify-center h-[3.2rem] md:h-[5rem] ' +
+                    className
                 }
             >
-                {day.date.split("-")[2]}
-            </span>
-
-            {/* Si es feriado: */}
-            {day.holiday && (
+                {/* Numero del día y color especial si es feria judicial */}
                 <span
-                    onClick={() =>
-                        typeof day.holiday == "object" &&
-                        Swal.fire({
-                            title: day.holiday.description,
-                            confirmButtonColor: "#f87171",
-                        })
+                    className={
+                        day.isJudicialVacation
+                            ? 'text-orange'
+                            : ['Sabado', 'Domingo'].includes(day.name)
+                            ? 'text-gray-400'
+                            : ''
                     }
-                    className="hover:text-red-200 cursor-pointer absolute mt-10 text-red-400 text-[0.75rem]"
                 >
-                    Feriado
+                    {day.date.split('-')[2]}
                 </span>
-            )}
+
+                {/* Si es feriado: */}
+                {day.holiday && (
+                    <span
+                        onClick={() =>
+                            typeof day.holiday == 'object' &&
+                            Swal.fire({
+                                title: day.holiday.description,
+                                confirmButtonColor: '#f87171',
+                            })
+                        }
+                        className='hover:text-red-200 cursor-pointer absolute mt-10 text-red-400 text-[0.75rem]'
+                    >
+                        Feriado
+                    </span>
+                )}
+            </div>
         </div>
     );
 }
 
 function Legend() {
     return (
-        <div className="bg-gray-900 absolute hidden xl:flex left-0 bottom-[45%] text-base md:text-xl flex-col rounded-xl rounded-l-none">
-            <h2 className="text-center mt-2">Referencias</h2>
-            <div className="flex items-center gap-5 px-6 py-3">
-                <h2 className="flex justify-center w-16">
-                    <div className="text-orange bg-gray-800 p-2 px-3 w-fit">
+        <div className='bg-gray-900 absolute hidden xl:flex left-0 bottom-[45%] text-base md:text-xl flex-col rounded-xl rounded-l-none'>
+            <h2 className='text-center mt-2'>Referencias</h2>
+            <div className='flex items-center gap-5 px-6 py-3'>
+                <h2 className='flex justify-center w-16'>
+                    <div className='text-orange bg-gray-800 p-2 px-3 w-fit'>
                         15
                     </div>
                 </h2>
-                <FaArrowRight className="text-sm" />
+                <FaArrowRight className='text-sm' />
                 <h2>Feria Judicial</h2>
             </div>
-            <div className="flex items-center gap-5 px-6 py-3">
-                <h2 className="flex justify-center w-16">
-                    <div className="text-gray-100 bg-[#7066E0] p-2 px-3 w-fit">
+            <div className='flex items-center gap-5 px-6 py-3'>
+                <h2 className='flex justify-center w-16'>
+                    <div className='text-gray-100 bg-[#7066E0] p-2 px-3 w-fit'>
                         15
                     </div>
                 </h2>
-                <FaArrowRight className="text-sm" />
+                <FaArrowRight className='text-sm' />
                 <h2>Fecha guardada</h2>
             </div>
         </div>
@@ -339,13 +361,13 @@ function Legend() {
 function alocateEmptyDivsUntilFirstDay(day: day) {
     const emptyDays: any = [];
     const names = [
-        "Lunes",
-        "Martes",
-        "Miercoles",
-        "Jueves",
-        "Viernes",
-        "Sabado",
-        "Domingo",
+        'Lunes',
+        'Martes',
+        'Miercoles',
+        'Jueves',
+        'Viernes',
+        'Sabado',
+        'Domingo',
     ];
 
     for (let i = 0; i < 7; i++) {
@@ -355,7 +377,7 @@ function alocateEmptyDivsUntilFirstDay(day: day) {
             emptyDays.push(
                 <div
                     key={i}
-                    className="bg-gray-900 relative text-xl flex flex-col items-center justify-center h-[3.2rem] md:h-[5rem]"
+                    className='bg-gray-900 relative text-xl flex flex-col items-center justify-center h-[3.2rem] md:h-[5rem]'
                 ></div>
             );
         }
