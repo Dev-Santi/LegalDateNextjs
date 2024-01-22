@@ -1,4 +1,4 @@
-import calendar from './calendar';
+import calendar from "./calendar";
 
 type filters = {
     holidays: boolean;
@@ -14,13 +14,17 @@ export type day = {
     isJudicialVacation: boolean;
 };
 
-export function calculateDate(dateSelected: string, countString: string, filters: filters) {
+export function calculateDate(
+    dateSelected: string,
+    countString: string,
+    filters: filters
+) {
     let count = parseInt(countString);
 
     const validInputs = CheckValidity(dateSelected, count);
 
     if (!validInputs.isValid) {
-        return validInputs.response;
+        return { title: validInputs.response, date: "" };
     }
 
     let found = false;
@@ -42,12 +46,17 @@ export function calculateDate(dateSelected: string, countString: string, filters
                 if (
                     count <= 0 &&
                     !currentDay.holiday &&
-                    !['Sabado,Domingo'].includes(currentDay.name) &&
+                    !["Sabado,Domingo"].includes(currentDay.name) &&
                     !currentDay.isJudicialVacation
                 ) {
-                    return `${currentDay.name} ${
-                        currentDay.date.split('-')[2]
-                    } de ${currentMonth.monthName.toLowerCase()} de ${currentYear.yearNumber}`;
+                    return {
+                        title: `${currentDay.name} ${
+                            currentDay.date.split("-")[2]
+                        } de ${currentMonth.monthName.toLowerCase()} de ${
+                            currentYear.yearNumber
+                        }`,
+                        date: currentDay.date,
+                    };
                 }
 
                 // Search for the date selected at the end to start the countdown in the next day
@@ -59,22 +68,22 @@ export function calculateDate(dateSelected: string, countString: string, filters
     }
 
     //Si no se ha encontrado una fecha, es porque son valores que exceden los calendarios
-    return 'La fecha se excede de los calendarios disponibles';
+    return "La fecha se excede de los calendarios disponibles";
 }
 
 function CheckValidity(dateSelected: string, count: number) {
     let isValid = true;
-    let response = '';
+    let response = "";
 
-    if (dateSelected == '') {
+    if (dateSelected == "") {
         isValid = false;
-        response = 'Error, ingrese fecha de notificacion de la demanda.';
+        response = "Error, ingrese fecha de notificacion de la demanda.";
     } else if (count <= 0) {
         isValid = false;
-        response = 'Error, el plazo debe ser igual o mayor a 1 dia.';
+        response = "Error, el plazo debe ser igual o mayor a 1 dia.";
     } else if (Number.isNaN(count)) {
         isValid = false;
-        response = 'Error, el plazo ingresado no es valido.';
+        response = "Error, el plazo ingresado no es valido.";
     }
 
     return { isValid: isValid, response: response };
@@ -89,12 +98,12 @@ function applyFilters(currentDay: day, filters: filters) {
     }
 
     //Turismo
-    if (filters.turismo && currentDay.holiday.description == 'Turismo') {
+    if (filters.turismo && currentDay.holiday.description == "Turismo") {
         response = false;
     }
 
     //Weekends
-    if (filters.weekend && ['Sabado', 'Domingo'].includes(currentDay.name)) {
+    if (filters.weekend && ["Sabado", "Domingo"].includes(currentDay.name)) {
         response = false;
     }
 

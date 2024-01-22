@@ -1,27 +1,6 @@
-import { NextResponse } from 'next/server';
-import { connectDB } from '@/libs/mongoose';
-import Dates from '@/models/dates';
-
-// export async function DELETE() {
-//     try {
-//         await connectDB();
-//         const data = await req.json();
-
-//         const user = data.user;
-//         const date = data.date;
-//         const userDates = await Dates.findById(user.dates._id);
-//         const dateIndex = userDates.findIndex((d: any) => {
-//             date == d.date;
-//         });
-//         userDates.splice(dateIndex, 1);
-
-//         const updateResponse = await Dates.findOneAndUpdate({ _id: userDates._id }, userDates);
-//         return NextResponse.json(updateResponse);
-//     } catch (e) {
-//         console.log(e);
-//         return NextResponse.json({ error: e }, { status: 500 });
-//     }
-// }
+import { NextResponse } from "next/server";
+import { connectDB } from "@/libs/mongoose";
+import Dates from "@/models/dates";
 
 export async function POST(req: Request) {
     try {
@@ -33,12 +12,15 @@ export async function POST(req: Request) {
         const userDates = await Dates.findById(user.dates._id);
         userDates.savedDates.push(date);
 
-        const updateResponse = await Dates.findOneAndUpdate({ _id: userDates._id }, userDates);
+        const updateResponse = await Dates.findOneAndUpdate(
+            { _id: userDates._id },
+            userDates
+        );
         return NextResponse.json(updateResponse);
     } catch (e) {
         console.log(e);
         return NextResponse.json(
-            { message: 'Error, posiblemente usuario no logueado' },
+            { message: "Error, posiblemente usuario no logueado" },
             { status: 400 }
         );
     }
