@@ -26,7 +26,10 @@ export default function Navbar() {
 
     return (
         <header className='flex justify-between items-center'>
-            <Link href='/' className='flex items-center gap-2 text-white hover:text-orange'>
+            <Link
+                href='/'
+                className='flex items-center gap-2 text-white hover:text-orange'
+            >
                 <span className='text-orange text-3xl'>
                     <GoLaw />
                 </span>
@@ -35,9 +38,16 @@ export default function Navbar() {
 
             {/* Mobile nav */}
 
-            <div className='md:hidden'>
-                <button onClick={handleClick} className='relative z-20 text-4xl text-orange'>
-                    {!isMenuActive ? <RxHamburgerMenu /> : <VscClose className='text-white' />}
+            <div className='md:hidden '>
+                <button
+                    onClick={handleClick}
+                    className='relative z-20 text-4xl text-orange'
+                >
+                    {!isMenuActive ? (
+                        <RxHamburgerMenu />
+                    ) : (
+                        <VscClose className='text-white' />
+                    )}
                 </button>
 
                 <nav
@@ -102,7 +112,9 @@ export default function Navbar() {
                 <ul className='flex gap-5 text-white items-center tracking-wider uppercase'>
                     <li>
                         <Link
-                            className={path == '/' ? 'text-gray-500' : 'hover:text-orange'}
+                            className={
+                                path == '/' ? 'text-gray-500' : 'hover:text-orange'
+                            }
                             href='/'
                         >
                             Inicio
@@ -111,7 +123,9 @@ export default function Navbar() {
                     <li>
                         <Link
                             className={
-                                path == '/calendario' ? 'text-gray-500' : 'hover:text-orange'
+                                path == '/calendario'
+                                    ? 'text-gray-500'
+                                    : 'hover:text-orange'
                             }
                             href='/calendario'
                         >
@@ -121,7 +135,9 @@ export default function Navbar() {
                     <li>
                         <Link
                             className={
-                                path == '/acerca-de' ? 'text-gray-500' : 'hover:text-orange'
+                                path == '/acerca-de'
+                                    ? 'text-gray-500'
+                                    : 'hover:text-orange'
                             }
                             href='/acerca-de'
                         >
