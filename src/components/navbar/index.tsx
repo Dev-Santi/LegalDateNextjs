@@ -52,7 +52,7 @@ export default function Navbar() {
 
                 <nav
                     className={
-                        'absolute z-10 shadow-xl transition-all duration-[400ms] bg-orange text-white top-0 right-0 p-5 pt-24 text-center rounded-bl-xl ' +
+                        'absolute z-10 shadow-xl transition-all duration-[400ms] bg-orange text-white top-0 right-0 p-5 pt-24 text-left rounded-bl-xl ' +
                         (isMenuActive ? 'top-0' : 'top-[-22rem]')
                     }
                 >
