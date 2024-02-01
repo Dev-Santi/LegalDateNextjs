@@ -10,13 +10,9 @@ import { useSession } from 'next-auth/react';
 
 export default function page() {
     const { data: session }: any = useSession();
-    const [currentMonth, setCurrentMonth] = useState(
-        calendar.years[1].months[0]
-    );
+    const [currentMonth, setCurrentMonth] = useState(calendar.years[1].months[0]);
     const currentYear = currentMonth.days[0].date.split('-')[0];
     const [savedDates, setSavedDates] = useState(null);
-
-    console.log(savedDates);
 
     async function getSavedDates() {
         try {
@@ -35,16 +31,13 @@ export default function page() {
     //Obtener el último mes visto anteriormente, guardado en Local storage.
     useEffect(() => {
         try {
-            const localStorageCurrentMonth =
-                localStorage.getItem('currentMonth');
+            const localStorageCurrentMonth = localStorage.getItem('currentMonth');
 
             if (localStorageCurrentMonth) {
                 setCurrentMonth(JSON.parse(localStorageCurrentMonth));
             }
         } catch (e) {
-            console.log(
-                'Error obteniendo último mes visualizado en el local storage'
-            );
+            console.log('Error obteniendo último mes visualizado en el local storage');
         }
     }, []);
 
@@ -68,10 +61,7 @@ export default function page() {
 
         if (newCurrentMonth) {
             try {
-                localStorage.setItem(
-                    'currentMonth',
-                    JSON.stringify(newCurrentMonth)
-                );
+                localStorage.setItem('currentMonth', JSON.stringify(newCurrentMonth));
             } catch (e) {
                 console.log(
                     'Error al intentar guardar último mes visualizado en el local storage'
@@ -102,9 +92,7 @@ export default function page() {
             try {
                 localStorage.setItem(
                     'currentMonth',
-                    JSON.stringify(
-                        year.months[currentMonthIndex + nextOrPrevious]
-                    )
+                    JSON.stringify(year.months[currentMonthIndex + nextOrPrevious])
                 );
             } catch (e) {
                 console.log(
@@ -121,9 +109,7 @@ export default function page() {
             try {
                 localStorage.setItem(
                     'currentMonth',
-                    JSON.stringify(
-                        year.months[currentMonthIndex + nextOrPrevious]
-                    )
+                    JSON.stringify(year.months[currentMonthIndex + nextOrPrevious])
                 );
             } catch (e) {
                 console.log(
@@ -209,27 +195,13 @@ function CellHeaders() {
     return (
         <>
             {/* Desktop */}
-            <span className='hidden md:block text-sm md:text-base py-3'>
-                Lunes
-            </span>
-            <span className='hidden md:block text-sm md:text-base py-3'>
-                Martes
-            </span>
-            <span className='hidden md:block text-sm md:text-base py-3'>
-                Miércoles
-            </span>
-            <span className='hidden md:block text-sm md:text-base py-3'>
-                Jueves
-            </span>
-            <span className='hidden md:block text-sm md:text-base py-3'>
-                Viernes
-            </span>
-            <span className='hidden md:block text-sm md:text-base py-3'>
-                Sábado
-            </span>
-            <span className='hidden md:block text-sm md:text-base py-3'>
-                Domingo
-            </span>
+            <span className='hidden md:block text-sm md:text-base py-3'>Lunes</span>
+            <span className='hidden md:block text-sm md:text-base py-3'>Martes</span>
+            <span className='hidden md:block text-sm md:text-base py-3'>Miércoles</span>
+            <span className='hidden md:block text-sm md:text-base py-3'>Jueves</span>
+            <span className='hidden md:block text-sm md:text-base py-3'>Viernes</span>
+            <span className='hidden md:block text-sm md:text-base py-3'>Sábado</span>
+            <span className='hidden md:block text-sm md:text-base py-3'>Domingo</span>
             {/* Mobile */}
             <span className='md:hidden text-sm md:text-base py-2'>Lun</span>
             <span className='md:hidden text-sm md:text-base py-2'>Mar</span>
@@ -251,36 +223,42 @@ function Cell({
     savedDates: Array<any> | null;
     setSavedDates: Function;
 }) {
+    let descriptions: { description: string }[] = [];
     let isSaved = false;
-    let description = '';
     savedDates?.forEach((e) => {
         if (e.date == day.date) {
-            description = e.description;
+            descriptions.push({ description: e.description });
             isSaved = true;
         }
     });
 
     async function handleClickIfSaved() {
-        if (isSaved) {
-            const swalResponse = await Swal.fire({
-                title: description,
-                showCancelButton: true,
-                confirmButtonText: 'Cerrar',
-                cancelButtonColor: 'red',
-                cancelButtonText: 'Eliminar',
-            });
+        try {
+            if (isSaved) {
+                for (let i = 0; i < descriptions.length; i++) {
+                    const swalResponse = await Swal.fire({
+                        title: descriptions[i].description || 'Sin descripcion.',
+                        showCancelButton: true,
+                        confirmButtonText: 'Eliminar',
+                        confirmButtonColor: 'red',
+                        cancelButtonText: 'Cerrar',
+                    });
 
-            //Si el usuario presional el boton de eliminar, el cual es interpretado como boton de cancelar
-            if (swalResponse.isDismissed) {
-                try {
-                    const response = await axios.delete(
-                        '/api/dates/' + day.date
-                    );
-                    setSavedDates(response.data.savedDates);
-                } catch (e) {
-                    console.log(e);
+                    //Si el usuario presional el boton de eliminar, el cual es interpretado como boton de cancelar
+                    if (swalResponse.isConfirmed) {
+                        // Para eliminar una fecha enviamos su date y su description, el codigo de por medio es para separar ambas secciones
+                        const response = await axios.delete(
+                            '/api/dates/' +
+                                day.date +
+                                'qq1Rlc' +
+                                descriptions[i].description
+                        );
+                        setSavedDates(response.data.savedDates);
+                    }
                 }
             }
+        } catch (e) {
+            console.log(e);
         }
     }
 
@@ -311,6 +289,13 @@ function Cell({
                     {day.date.split('-')[2]}
                 </span>
 
+                {/* Si hay mas de una fecha guardada, mostrar al cantidad */}
+                {descriptions.length > 1 ? (
+                    <span className='absolute text-sm md:text-lg top-0 right-0 mr-1 md:mr-2'>
+                        {descriptions.length}
+                    </span>
+                ) : null}
+
                 {/* Si es feriado: */}
                 {day.holiday && (
                     <span
@@ -337,18 +322,14 @@ function Legend() {
             <h2 className='text-center mt-2'>Referencias</h2>
             <div className='flex items-center gap-5 px-6 py-3'>
                 <h2 className='flex justify-center w-16'>
-                    <div className='text-orange bg-gray-800 p-2 px-3 w-fit'>
-                        15
-                    </div>
+                    <div className='text-orange bg-gray-800 p-2 px-3 w-fit'>15</div>
                 </h2>
                 <FaArrowRight className='text-sm' />
                 <h2>Feria Judicial</h2>
             </div>
             <div className='flex items-center gap-5 px-6 py-3'>
                 <h2 className='flex justify-center w-16'>
-                    <div className='text-gray-100 bg-[#7066E0] p-2 px-3 w-fit'>
-                        15
-                    </div>
+                    <div className='text-gray-100 bg-[#7066E0] p-2 px-3 w-fit'>15</div>
                 </h2>
                 <FaArrowRight className='text-sm' />
                 <h2>Fecha guardada</h2>

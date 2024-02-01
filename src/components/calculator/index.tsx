@@ -5,9 +5,12 @@ import { calculateDate } from '@/calendar/functions';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Calculator() {
+    // Historial
+    const [history, setHistory]: any = useState([]);
+    const [historyExpanded, setHistoryExpanded] = useState(false);
     const { data: session }: any = useSession();
     const [date, setDate] = useState('');
     const [count, setCount] = useState('15');
@@ -19,6 +22,22 @@ export default function Calculator() {
     });
     const [visibleFilters, setVisibleFilters] = useState(false);
     const [preFilter, setPreFilter] = useState(0);
+
+    // Recuperar historial del Local Storage
+    useEffect(() => {
+        try {
+            const localHistory = localStorage.getItem('history');
+            if (localHistory) {
+                setHistory(JSON.parse(localHistory));
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }, []);
+
+    function handleHistoryClick() {
+        setHistoryExpanded(!historyExpanded);
+    }
 
     function setLaboral() {
         setFilters({
@@ -66,40 +85,70 @@ export default function Calculator() {
 
         let icon: SweetAlertIcon = 'success';
         let color = 'green';
-        let showCancelButton = true;
+        let showConfirmButton = true;
+        let parsedDate = '';
 
         if (response.title.includes('Error')) {
             icon = 'warning';
             color = '#d4a05b';
-            showCancelButton = false;
+            showConfirmButton = false;
+        } else {
+            // Si no hay un error, se cambia de formato la fecha
+            parsedDate += response.date.split('-')[2] + '/';
+            parsedDate += response.date.split('-')[1] + '/';
+            parsedDate += response.date.split('-')[0];
+
+            // Si no hay error, se guarda la ultima fecha calculada en el localstorage
+            if (history.length < 4) {
+                const newHistory = [...history, { response: response }];
+                setHistory(newHistory);
+                localStorage.setItem('history', JSON.stringify(newHistory));
+            } else {
+                const newHistory = [...history.splice(1), { response: response }];
+                setHistory(newHistory);
+                localStorage.setItem('history', JSON.stringify(newHistory));
+            }
         }
 
         const result = await swal.fire({
             title: response.title,
+            text: parsedDate,
             icon: icon,
             iconColor: color,
             confirmButtonColor: color,
-            confirmButtonText: 'Cerrar',
-            showCancelButton: showCancelButton,
-            cancelButtonText: 'Guardar',
-            cancelButtonColor: '#7066e0',
+            confirmButtonText: 'Guardar',
+            showConfirmButton: showConfirmButton,
+            cancelButtonText: 'Cerrar',
+            showCancelButton: true,
         });
 
         // En este caso, es dismissed cuando el usuario pulsa guardar, ya que es el boton de cancelar en Swal
-        if (result.isDismissed && session) {
-            const saveResponse = await swal.fire({
-                title: 'Ingrese una descripción',
-                confirmButtonText: 'Guardar',
-                input: 'text',
-                showCancelButton: true,
-                cancelButtonText: 'Cancelar',
-                inputAutoTrim: true,
-            });
+        if (result.isConfirmed && session) {
+            try {
+                const saveResponse = await swal.fire({
+                    title: 'Ingrese una descripción',
+                    confirmButtonText: 'Guardar',
+                    input: 'text',
+                    showCancelButton: true,
+                    cancelButtonText: 'Cancelar',
+                    inputAutoTrim: true,
+                });
 
-            if (saveResponse.isConfirmed) {
-                await saveDate(response.date, saveResponse.value);
+                if (saveResponse.isConfirmed) {
+                    await saveDate(response.date, saveResponse.value);
+
+                    swal.fire({
+                        title: 'Fecha guardada con éxito',
+                        icon: icon,
+                        iconColor: color,
+                        confirmButtonColor: color,
+                        confirmButtonText: 'Cerrar',
+                    });
+                }
+            } catch (e) {
+                console.log(e);
             }
-        } else if (result.isDismissed) {
+        } else if (result.isConfirmed && !session) {
             swal.fire({
                 title: 'Debes iniciar sesión para guardar fechas.',
             });
@@ -123,11 +172,7 @@ export default function Calculator() {
                     >
                         Filtros
                         <span>
-                            {visibleFilters ? (
-                                <IoIosArrowUp />
-                            ) : (
-                                <IoIosArrowDown />
-                            )}
+                            {visibleFilters ? <IoIosArrowUp /> : <IoIosArrowDown />}
                         </span>
                     </h2>
 
@@ -142,9 +187,7 @@ export default function Calculator() {
                             onClick={setLaboral}
                             className={
                                 'p-2 border-[2px] hover:bg-gray-600 border-gray-500 cursor-pointer ' +
-                                (preFilter == 0
-                                    ? 'bg-gray-500 hover:bg-gray-500'
-                                    : '')
+                                (preFilter == 0 ? 'bg-gray-500 hover:bg-gray-500' : '')
                             }
                         >
                             Derecho Laboral
@@ -153,9 +196,7 @@ export default function Calculator() {
                             onClick={setCivil}
                             className={
                                 'p-2 border-[2px] hover:bg-gray-600 border-gray-500 cursor-pointer ' +
-                                (preFilter == 1
-                                    ? 'bg-gray-500 hover:bg-gray-500'
-                                    : '')
+                                (preFilter == 1 ? 'bg-gray-500 hover:bg-gray-500' : '')
                             }
                         >
                             Derecho Civil
@@ -163,9 +204,7 @@ export default function Calculator() {
                         <div
                             className={
                                 'p-2 border-[2px] border-gray-500 opacity-25 ' +
-                                (preFilter == 2
-                                    ? 'bg-gray-500 opacity-[100%]'
-                                    : '')
+                                (preFilter == 2 ? 'bg-gray-500 opacity-[100%]' : '')
                             }
                         >
                             Personalizado
@@ -297,6 +336,64 @@ export default function Calculator() {
                     CALCULAR
                 </button>
             </form>
+
+            {/* Historial de calculos */}
+            {/* Historial mobile */}
+            <h2 className='text-white'>
+                Última fecha calculada:{' '}
+                {history.length ? (
+                    <span className='text-orange'>
+                        {history[history.length - 1]?.response.date.split('-')[2]}/
+                        {history[history.length - 1]?.response.date.split('-')[1]}/
+                        {history[history.length - 1]?.response.date.split('-')[0]}
+                    </span>
+                ) : (
+                    'Sin datos'
+                )}
+            </h2>
+
+            {/* Historial desktop */}
+            <div
+                onClick={handleHistoryClick}
+                className={
+                    'hidden md:block opacity-50 hover:opacity-100 transition-all absolute left-0 ml-4 mt-24 2xl:mt-8 top-0 border-2 border-gray-700 h-12 overflow-hidden cursor-pointer p-2' +
+                    ' ' +
+                    (historyExpanded ? 'h-40' : '')
+                }
+            >
+                <h2 className='text-white text-xl font-bold text-center mb-2'>
+                    Historial
+                </h2>
+                {history.map(
+                    (h: { response: { title: string; date: string } }, index: number) => {
+                        if (history.length == index + 1) {
+                            return (
+                                <span
+                                    key={index}
+                                    className='block text-center text-orange text-lg'
+                                >
+                                    {/* Cambiamos el formato de la fecha por el usado en uruguay */}
+                                    {h.response.date.split('-')[2]}/
+                                    {h.response.date.split('-')[1]}/
+                                    {h.response.date.split('-')[0]}
+                                </span>
+                            );
+                        } else {
+                            return (
+                                <span
+                                    key={index}
+                                    className='block text-center text-gray-300 text-base'
+                                >
+                                    {/* Cambiamos el formato de la fecha por el usado en uruguay */}
+                                    {h.response.date.split('-')[2]}/
+                                    {h.response.date.split('-')[1]}/
+                                    {h.response.date.split('-')[0]}
+                                </span>
+                            );
+                        }
+                    }
+                )}
+            </div>
         </>
     );
 }

@@ -1,0 +1,2 @@
+Guardar ultimo input fecha en el local storage para que al volver de otra seccion la fecha se mantenga
+Trabajar en el sistema de alertas

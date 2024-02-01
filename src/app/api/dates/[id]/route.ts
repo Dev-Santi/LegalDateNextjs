@@ -10,12 +10,14 @@ export async function DELETE(req: Request, { params }: params) {
     try {
         await connectDB();
 
+        const [paramsDate, paramsDescription] = params.id.split('qq1Rlc');
+
         const dates = await Dates.findOne({
-            'savedDates.date': params.id,
+            'savedDates.date': paramsDate,
         });
 
         const indexOfDateToDelete = dates.savedDates.findIndex((d: any) => {
-            return d.date == params.id;
+            return d.date == paramsDate && d.description == paramsDescription;
         });
 
         dates.savedDates.splice(indexOfDateToDelete, 1);
