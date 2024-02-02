@@ -1,5 +1,15 @@
 import { Schema, model, models } from "mongoose";
 
+const datesSchema = new Schema({
+    savedDates: [
+        {
+            date: { type: String },
+            description: { type: String },
+            alert: { type: Boolean, default: false },
+        },
+    ],
+});
+
 const userSchema = new Schema({
     email: {
         type: String,
@@ -23,5 +33,5 @@ userSchema.pre("findOne", function () {
     this.populate("dates");
 });
 
-const User = models.User || model("User", userSchema);
-export default User;
+export const Dates = models.Dates || model("Dates", datesSchema);
+export const User = models.User || model("User", userSchema);

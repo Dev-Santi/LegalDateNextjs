@@ -1,6 +1,6 @@
-import { connectDB } from '@/libs/mongoose';
-import { NextResponse } from 'next/server';
-import Dates from '@/models/dates';
+import { connectDB } from "@/libs/mongoose";
+import { NextResponse } from "next/server";
+import { Dates } from "@/models/user";
 
 type params = {
     params: { id: string };
@@ -10,10 +10,10 @@ export async function DELETE(req: Request, { params }: params) {
     try {
         await connectDB();
 
-        const [paramsDate, paramsDescription] = params.id.split('qq1Rlc');
+        const [paramsDate, paramsDescription] = params.id.split("qq1Rlc");
 
         const dates = await Dates.findOne({
-            'savedDates.date': paramsDate,
+            "savedDates.date": paramsDate,
         });
 
         const indexOfDateToDelete = dates.savedDates.findIndex((d: any) => {
@@ -43,7 +43,7 @@ export async function GET(req: Request, { params }: params) {
         return NextResponse.json({ dates: dates.savedDates });
     } catch (e) {
         return NextResponse.json(
-            { message: 'Error, posiblemente usuario no logueado' },
+            { message: "Error, posiblemente usuario no logueado" },
             { status: 400 }
         );
     }
