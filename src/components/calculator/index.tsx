@@ -82,6 +82,7 @@ export default function Calculator() {
         const response: any = calculateDate(date, count, {
             ...filters,
         });
+        
 
         let icon: SweetAlertIcon = 'success';
         let color = 'green';
